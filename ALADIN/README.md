@@ -33,3 +33,7 @@ Development · Construction · Real Estate
 Pilot direction: energy-efficient low-rise residential development in Ivano-Frankivsk region.
 
 The visual direction is realistic, premium and developer-oriented rather than conceptual or fantasy-styled.
+
+## Publication
+
+Latest ALADIN visual update: investor cash-flow protection infographics, individual roadmap photography, and risk photography with matching risk meters.
