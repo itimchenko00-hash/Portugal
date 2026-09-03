@@ -1,18 +1,35 @@
-# ALADIN — standalone publication copy
+# ALADIN MMW-COMPANY
 
-This directory is an independent backup/publication copy of the ALADIN presentation.
+ALADIN is an independently developed project module within the MMW-COMPANY portfolio.
 
-Source: `itimchenko00-hash/MMW_COMPANY`, branch `WORK/ALADIN-2026-09-03`.
+It is intentionally developed and tested separately, but it is **not intended to become a permanently isolated standalone web service**. The final architecture will combine ALADIN with the other MMW-COMPANY projects into one unified MMW-COMPANY ecosystem.
 
-Publication snapshot: 2026-09-03.
+## Project architecture
+
+- **MMW-COMPANY** — master corporate brand and future unified portal.
+- **ALADIN** — development, construction and real-estate project module.
+- Future modules: NEXUS WORK, NEXUS LOGISTICS, CARPATHIA, AGROHUB, ENERGY PARK.
+
+Each project keeps its own content, design, files and development history until the integration stage.
 
 ## Protection rule
 
-- Do not modify `MMW_COMPANY/main` as part of ALADIN work.
-- Do not modify MMW-ORDER or any frozen project.
-- Changes to ALADIN must be made only in ALADIN-specific branches/files.
-- This copy is kept as a separate technical backup/publication point.
+- Do not modify the protected MMW-COMPANY master site while working on ALADIN.
+- Do not modify MMW-ORDER or any other frozen project.
+- ALADIN changes are made only in ALADIN-specific branches/files.
+- This branch is a controlled ALADIN development/publication copy.
+- No separate Render Web Service is required for the current static presentation stage.
 
 ## Entry point
 
 `ALADIN/index.html`
+
+## Current positioning
+
+**ALADIN MMW-COMPANY**
+
+Development · Construction · Real Estate
+
+Pilot direction: energy-efficient low-rise residential development in Ivano-Frankivsk region.
+
+The visual direction is realistic, premium and developer-oriented rather than conceptual or fantasy-styled.
