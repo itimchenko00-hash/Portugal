@@ -1,0 +1,25 @@
+name: import-etalon-7
+on:
+  push:
+    branches: [main]
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Portugal
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Import exact Etalon 7.0
+        run: |
+          git clone --depth 1 https://github.com/itimchenko00-hash/MMW-RESERW.git /tmp/reserw
+          rm -rf -- ./* ./.??* || true
+          cp -a "/tmp/reserw/ETALON-7.0/MMW-COMPANY-2-WORKING/." .
+          rm -f .github/workflows/import-etalon-7.yml
+      - name: Commit exact site
+        run: |
+          git config user.name "MMW Import Bot"
+          git config user.email "itimchenko00@gmail.com"
+          git add -A
+          git commit -m "Import exact Etalon 7.0" || exit 0
+          git push origin HEAD:main
