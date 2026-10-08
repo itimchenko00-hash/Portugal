@@ -13,7 +13,7 @@ jobs:
       - name: Import exact Etalon 7.0
         run: |
           git clone --depth 1 https://github.com/itimchenko00-hash/MMW-RESERW.git /tmp/reserw
-          rm -rf -- ./* ./.??* || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           cp -a "/tmp/reserw/ETALON-7.0/MMW-COMPANY-2-WORKING/." .
           rm -f .github/workflows/import-etalon-7.yml
       - name: Commit exact site
