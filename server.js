@@ -5,7 +5,7 @@ const safe=(base,rel)=>{const b=path.resolve(base),p=path.resolve(base,rel);retu
 const server=http.createServer((req,res)=>{
  try{
   const u=new URL(req.url,"http://localhost"),p=u.pathname;
-  if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"mmw-company",release:"Etalon 7.0",root:"public"}))}
+  if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"mmw-company",release:"Etalon 7.1",root:"public"}))}
   let rel=decodeURIComponent(p);if(rel==="/")rel="/index.html";
   const f=safe(publicRoot,rel.slice(1));
   if(f&&fs.existsSync(f)&&fs.statSync(f).isFile()){
@@ -16,4 +16,4 @@ const server=http.createServer((req,res)=>{
   res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});return res.end("Not found");
  }catch(e){console.error(e);res.writeHead(500,{"Content-Type":"text/plain; charset=utf-8"});return res.end("Server error")}
 });
-server.listen(port,"0.0.0.0",()=>console.log("MMW-COMPANY Etalon 7.0 "+port));
+server.listen(port,"0.0.0.0",()=>console.log("MMW-COMPANY Etalon 7.1 "+port));
