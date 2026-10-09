@@ -19,7 +19,9 @@ Production host: https://mmw-company.onrender.com
 
 ## Release gates
 
-- Source-level consistency checks: to be recorded after final candidate review.
+- Source-level consistency checks: PASS for all eight existing public pages plus the two new information pages; all ten pages use the production canonical host; JSON-LD parses on all ten pages; the old `mmw-company-2.onrender.com` host is absent from checked public pages, `robots.txt` and `sitemap.xml;` company/privacy links are present; all six project pages retain project-specific email subjects.
+- Sitemap contains the homepage, catalog, six projects, company information and privacy page; `robots.txt` points to the production sitemap.
+- Existing project HTML and media references were preserved rather than replaced wholesale; no image binaries were changed.
 - Browser/mobile visual QA, live page/image loading, external order registration/handling, accessibility, performance, and legal review remain separate production gates.
 - Privacy content is an implementation-level description, not a substitute for jurisdiction-specific legal review. Legal operator details were not invented.
 
