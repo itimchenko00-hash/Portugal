@@ -4,7 +4,41 @@
 
 .mediaCard{height:112px;border-radius:16px;overflow:hidden;margin:18px 0 15px;background:#dfe9e3}.mediaCard img{width:100%;height:100%;display:block;object-fit:cover}.card .ico{display:none}.card h3{margin-top:0}.heroPhoto{width:100%;height:205px;display:block;object-fit:cover;border-radius:22px;margin:16px 0 12px;filter:saturate(.9) contrast(1.02)}.heroMedia{padding:20px}.heroMedia p{margin-top:0}
 :focus-visible{outline:2px solid currentColor;outline-offset:3px}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
-.step{position:relative;min-height:220px;padding:16px;overflow:hidden}.stepDetail{font-size:10px;line-height:1.5;color:#b8c9c2;margin-top:10px;max-height:0;opacity:0;overflow:hidden;transition:.35s}.step.on .stepDetail{max-height:80px;opacity:1}.miniInf{height:58px;margin:2px 0 4px;display:flex;align-items:center;justify-content:center}.miniInf svg{width:100%;height:58px}.miniInf .line{stroke:#a8e4d1;stroke-width:2;fill:none;opacity:.7}.miniInf .node{fill:#0f9477;stroke:#a8e4d1;stroke-width:1.5}.miniInf .dot{fill:#a8e4d1}.miniInf text{fill:#d9f2e9;font-size:7px;font-weight:800}</style></head><body>
+.step{position:relative;min-height:220px;padding:16px;overflow:hidden}.stepDetail{font-size:10px;line-height:1.5;color:#b8c9c2;margin-top:10px;max-height:0;opacity:0;overflow:hidden;transition:.35s}.step.on .stepDetail{max-height:80px;opacity:1}.miniInf{height:58px;margin:2px 0 4px;display:flex;align-items:center;justify-content:center}.miniInf svg{width:100%;height:58px}.miniInf .line{stroke:#a8e4d1;stroke-width:2;fill:none;opacity:.7}.miniInf .node{fill:#0f9477;stroke:#a8e4d1;stroke-width:1.5}.miniInf .dot{fill:#a8e4d1}.miniInf text{fill:#d9f2e9;font-size:7px;font-weight:800}
+/* ETALON 7.0 — cross-page mobile stability */
+*,*::before,*::after{box-sizing:border-box}
+html{max-width:100%;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{min-width:0;max-width:100%;overflow-x:clip}
+main,header,footer,section,nav,article,aside,div{min-width:0}
+img,svg,video,canvas,iframe{max-width:100%}
+img{height:auto}
+a,button,input,select,textarea{overflow-wrap:anywhere}
+button,a,[role="button"],input,select,textarea{touch-action:manipulation}
+input,select,textarea{max-width:100%}
+:focus-visible{outline-offset:3px}
+@media(max-width:760px){
+  html,body{width:100%;overflow-x:clip}
+  h1{overflow-wrap:anywhere}
+  p,li{overflow-wrap:anywhere}
+  .grid,.cards,.metrics,.features,.steps,.stages,.detail-grid,.formatGrid,.heroGrid,.hero-grid,.projectGrid,.project-grid,.serviceGrid,.service-grid,.catalogGrid,.catalog-grid{grid-template-columns:minmax(0,1fr)!important}
+  .wrap,.container,.shell,.page,.section-inner,.content,.inner,.sectionWrap,.section-wrap{max-width:100%;min-width:0}
+  table{display:block;max-width:100%;overflow-x:auto}
+  button,a[role="button"],input[type="submit"],input[type="button"]{min-height:44px}
+  .mobileProjectToggle,.mobileNavToggle,.mobileMenuButton{min-width:44px;min-height:44px}
+  .mobileProjectNav,.mobileNav,.drawer{max-width:100vw;max-width:100dvw;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+  .modal,.sheet,.formatModalBody,.agroModal,.logModal{max-width:100%;overscroll-behavior:contain}
+  .sheet{max-height:calc(100dvh - 12px);overflow-y:auto;padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+}
+@media(max-width:380px){
+  .wrap,.container,.shell,.section-inner,.content,.inner{width:calc(100% - 28px);padding-left:0;padding-right:0}
+  button,a[role="button"]{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  html:focus-within{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+/* END ETALON 7.0 MOBILE STABILITY */
+</style></head><body>
 <header class="head"><div class="wrap nav"><a class="brand" href="#top"><i class="mark"></i><span>MMW-COMPANY<small>PROJECT DEVELOPMENT COMPANY</small></span></a><nav class="links"><a href="#catalog">Направления</a><a href="./catalog.html">Каталог</a><a href="#projects">Проекты</a><a href="#method">Метод</a><a href="#contact">Контакты</a></nav><a class="cta" href="https://mmw-order.onrender.com" target="_blank" rel="noopener">Оформить заявку ↗</a><button class="menuBtn" id="menuBtn" type="button" aria-label="Открыть навигацию" aria-expanded="false"><span></span><span></span></button></div></header><nav class="mobileNav" id="mobileNav" aria-label="Мобильная навигация"><a href="#catalog">Направления</a><a href="./catalog.html">Каталог</a><a href="#projects">Проекты</a><a href="#method">Метод</a><a href="#contact">Контакты</a><a class="mobileCta" href="https://mmw-order.onrender.com" target="_blank" rel="noopener">Оформить заявку ↗</a></nav>
 <main id="top">
 <section class="hero"><div class="wrap heroGrid"><div><div class="ey">MMW-COMPANY · BUSINESS PROJECT DEVELOPMENT</div><h1>От возможности<br>до результата.</h1><p class="lead">Развитие бизнес-проектов от исходной возможности до структурированного проекта: продукт, экономика, реализация, управление, инвестиционная и коммерческая упаковка.</p><div class="actions"><a class="btn" href="#catalog">Смотреть направления ↗</a><a class="btn alt" href="#scanner">Проверить возможность</a></div></div><div class="engine heroMedia"><b>MMW PROJECT ENGINE</b><img class="heroPhoto" src="./ASSETS/MMW-COMPANY/photos/web-selected/00-hero-project-development.jpg" alt="Команда обсуждает проектное решение" decoding="async" loading="eager" fetchpriority="high"><div class="orbit"><div class="core">MMW<br>PROJECT</div><div class="node n1">ВОЗМОЖНОСТЬ</div><div class="node n2">ПРОДУКТ</div><div class="node n3">ЭКОНОМИКА</div><div class="node n4">РЕАЛИЗАЦИЯ</div><div class="node n5">УПРАВЛЕНИЕ</div></div><p>Для каждого проекта формируется собственная модель ценности, экономики и реализации.</p></div></div></section>
