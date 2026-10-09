@@ -16,4 +16,4 @@ const server=http.createServer((req,res)=>{
   res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});return res.end("Not found");
  }catch(e){console.error(e);res.writeHead(500,{"Content-Type":"text/plain; charset=utf-8"});return res.end("Server error")}
 });
-server.listen(port,"0.0.0.0",()=>console.log("MMW-COMPANY/2 "+port));
+server.listen(port,"0.0.0.0",()=>console.log("MMW-COMPANY Etalon 7.0 "+port));
