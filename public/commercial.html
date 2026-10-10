@@ -260,6 +260,48 @@
  body.printing-single #receiptBody .profile-record[data-print-selected="true"] .profile-record-details{display:block!important}
  body.printing-single #receiptBody>.receipt-footer{margin-top:18px!important}
 }
+
+/* Restored MMW single-request receipt style */
+#mmwSinglePrintReceipt{display:none}
+@media print{
+ @page{size:A4 portrait;margin:13mm 14mm}
+ body.printing-single-receipt{background:#fff!important;color:#17241e!important;font-family:Arial,Helvetica,sans-serif!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body.printing-single-receipt>*:not(#mmwSinglePrintReceipt){display:none!important}
+ body.printing-single-receipt #mmwSinglePrintReceipt{display:block!important;color:#17241e!important;font:10pt/1.45 Arial,Helvetica,sans-serif!important}
+ #mmwSinglePrintReceipt *{box-sizing:border-box;box-shadow:none!important;text-shadow:none!important}
+ #mmwSinglePrintReceipt .mmw-print-masthead{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 15px;margin:0 0 22px;background:#071b17!important;color:#fff!important;border-bottom:4px solid #0f9477;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-brand{display:flex;align-items:center;gap:10px;color:#fff!important}
+ #mmwSinglePrintReceipt .mmw-print-brand strong{display:block;color:#fff!important;font-size:15pt;line-height:1.1;letter-spacing:-.03em}
+ #mmwSinglePrintReceipt .mmw-print-brand small{display:block;margin-top:4px;color:#bdebd9!important;font-size:6.5pt;letter-spacing:.11em}
+ #mmwSinglePrintReceipt .mmw-print-mark{display:grid;place-items:center;width:37px;height:37px;border-radius:8px;background:#bdebd9!important;color:#071b17!important;font-size:11pt;font-weight:900}
+ #mmwSinglePrintReceipt .mmw-print-doc-label{font-size:7pt;letter-spacing:.1em;color:#bdebd9!important;text-align:right}
+ #mmwSinglePrintReceipt .mmw-print-title{margin:0 0 15px!important;color:#071b17!important;font-size:23pt!important;line-height:1.12!important;letter-spacing:-.035em!important}
+ #mmwSinglePrintReceipt .mmw-print-number{padding:12px 14px;margin:0 0 20px;border:1px solid #d8e5dc;background:#f2f7f3;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-label{display:block;color:#63736c!important;font-size:7pt;line-height:1.4;letter-spacing:.1em;font-weight:800}
+ #mmwSinglePrintReceipt .mmw-print-number-value{display:block;margin-top:4px;color:#071b17!important;font-size:16pt;line-height:1.25;letter-spacing:-.02em;overflow-wrap:anywhere}
+ #mmwSinglePrintReceipt .mmw-print-date{margin:7px 0 0;color:#52645b!important;font-size:8.5pt}
+ #mmwSinglePrintReceipt .mmw-print-section-title{margin:18px 0 9px!important;color:#0b705b!important;font-size:9pt!important;line-height:1.4!important;letter-spacing:.09em!important;font-weight:800!important;break-after:avoid}
+ #mmwSinglePrintReceipt .mmw-print-client{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ #mmwSinglePrintReceipt .mmw-print-cell{min-width:0;padding:10px 11px;border:1px solid #dce5de;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-field-value{display:block;margin-top:4px;color:#17241e!important;font-size:9.5pt;line-height:1.4;overflow-wrap:anywhere}
+ #mmwSinglePrintReceipt .mmw-print-status-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;padding:9px 11px;background:#f2f7f3;border:1px solid #d8e5dc;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-status{display:inline-block;padding:4px 8px;border:1px solid #cfe2d5;background:#e6f2ec;color:#075543!important;font-size:8.5pt;line-height:1.3}
+ #mmwSinglePrintReceipt .mmw-print-table{border:1px solid #d8e5dc}
+ #mmwSinglePrintReceipt .mmw-print-table-head,#mmwSinglePrintReceipt .mmw-print-table-row{display:grid;grid-template-columns:minmax(0,1fr) 48px 86px 92px;gap:8px;align-items:center;padding:10px 9px}
+ #mmwSinglePrintReceipt .mmw-print-table-head{background:#e6f2ec!important;color:#0b705b!important;font-size:7pt;font-weight:900;letter-spacing:.06em}
+ #mmwSinglePrintReceipt .mmw-print-table-head span:not(:first-child),#mmwSinglePrintReceipt .mmw-print-table-row span:not(:first-child),#mmwSinglePrintReceipt .mmw-print-table-row strong{text-align:right}
+ #mmwSinglePrintReceipt .mmw-print-table-row{border-top:1px solid #e1e9e3;font-size:9pt;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-table-row span:first-child{overflow-wrap:anywhere}
+ #mmwSinglePrintReceipt .mmw-print-table-row strong{font-weight:700;white-space:nowrap}
+ #mmwSinglePrintReceipt .mmw-print-total{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:14px;background:#071b17!important;color:#fff!important;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-total span{color:#bdebd9!important;font-size:8.5pt;font-weight:800;letter-spacing:.07em}
+ #mmwSinglePrintReceipt .mmw-print-total strong{color:#fff!important;font-size:19pt;letter-spacing:-.035em;white-space:nowrap}
+ #mmwSinglePrintReceipt .mmw-print-notes,#mmwSinglePrintReceipt .mmw-print-message{margin:12px 0 0;padding:10px 12px;background:#f5f8f5;color:#34453b!important;font-size:9pt;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+ #mmwSinglePrintReceipt .mmw-print-disclaimer{margin:12px 0 0;padding:10px 12px;border-left:3px solid #c6aa6b;background:#fff8e9;color:#574a2d!important;font-size:8pt;line-height:1.5;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-footer{display:grid;gap:3px;margin-top:24px;padding-top:10px;border-top:1px solid #dce5de;break-inside:avoid}
+ #mmwSinglePrintReceipt .mmw-print-footer strong{color:#0b705b!important;font-size:9pt}
+ #mmwSinglePrintReceipt .mmw-print-footer span{color:#63736c!important;font-size:8pt}
+}
 </style>
 </head>
 <body>
@@ -402,6 +444,72 @@ function renderAdmin(data){
  for(const i of inquiries)root.appendChild(recordNode("inquiry",i));
  if(!orders.length&&!inquiries.length)addText(root,"p","Записей пока нет.","muted");
 }
+function printSingleRecord(entry, statusLabels){
+ const r=entry.record||{}, isOrder=entry.kind==="order";
+ const dateValue=entry.date?new Date(entry.date).toLocaleString("uk-UA",{dateStyle:"long",timeStyle:"short"}):"—";
+ const customerName=r.customerName||r.customer_name||r.name||"—";
+ const phone=r.customerPhone||r.customer_phone||r.phone||"—";
+ const email=r.customerEmail||r.customer_email||r.email||"—";
+ const organization=r.organization||r.company||"—";
+ const project=r.project_slug||r.projectSlug||r.project||"—";
+ const kind=r.inquiry_type||r.inquiryType||"—";
+ const items=Array.isArray(r.items)?r.items:[];
+ const currency=r.currency||"UAH";
+ const total=Number(r.subtotal??r.total??r.total_amount??0);
+ const moneyValue=v=>new Intl.NumberFormat("uk-UA",{style:"currency",currency:currency==="UAH"?"UAH":currency,maximumFractionDigits:0}).format(Number(v||0));
+ const root=document.createElement("article");root.id="mmwSinglePrintReceipt";
+ const mast=document.createElement("header");mast.className="mmw-print-masthead";
+ const brand=document.createElement("div");brand.className="mmw-print-brand";
+ addText(brand,"span","MMW","mmw-print-mark");
+ const brandText=document.createElement("div");addText(brandText,"strong","MMW");addText(brandText,"small","PROJECT DEVELOPMENT & MANAGEMENT");brand.appendChild(brandText);
+ mast.appendChild(brand);addText(mast,"span","ВЫПИСКА ПО ЗАЯВКЕ","mmw-print-doc-label");root.appendChild(mast);
+ addText(root,"h1","ВЫПИСКА ПО ЗАЯВКЕ","mmw-print-title");
+ const numberBox=document.createElement("section");numberBox.className="mmw-print-number";
+ const numberLabel=isOrder?"НОМЕР ЗАЯВКИ":"НОМЕР ОБРАЩЕНИЯ";
+ addText(numberBox,"span",numberLabel,"mmw-print-label");addText(numberBox,"strong",entry.number||"—","mmw-print-number-value");
+ addText(numberBox,"p","Дата оформления: "+dateValue,"mmw-print-date");root.appendChild(numberBox);
+ addText(root,"h2","01 / ДАННЫЕ КЛИЕНТА","mmw-print-section-title");
+ const client=document.createElement("section");client.className="mmw-print-client";
+ const fields=[["ИМЯ",customerName],["ТЕЛЕФОН",phone],["EMAIL",email],["КОМПАНИЯ",organization]];
+ if(!isOrder){fields.push(["ПРОЕКТ",project],["ТИП ОБРАЩЕНИЯ",kind])}
+ for(const [label,value] of fields){const cell=document.createElement("div");cell.className="mmw-print-cell";addText(cell,"span",label,"mmw-print-label");addText(cell,"strong",String(value||"—"),"mmw-print-field-value");client.appendChild(cell)}
+ root.appendChild(client);
+ addText(root,"h2",isOrder?"02 / СОСТАВ ЗАКАЗА":"02 / СОДЕРЖАНИЕ ОБРАЩЕНИЯ","mmw-print-section-title");
+ const statusBox=document.createElement("div");statusBox.className="mmw-print-status-row";addText(statusBox,"span","СТАТУС","mmw-print-label");addText(statusBox,"strong",statusLabels[entry.status]||entry.status||"Новая","mmw-print-status");root.appendChild(statusBox);
+ if(isOrder){
+  const table=document.createElement("div");table.className="mmw-print-table";
+  const head=document.createElement("div");head.className="mmw-print-table-head";
+  for(const label of ["НАИМЕНОВАНИЕ","КОЛ-ВО","ЦЕНА","СУММА"])addText(head,"span",label);
+  table.appendChild(head);
+  if(items.length){
+   for(const item of items){
+    const row=document.createElement("div");row.className="mmw-print-table-row";
+    const qty=Number(item.quantity||1), line=Number(item.lineTotal??item.line_total??(Number(item.price||0)*qty));
+    const price=Number(item.price??(qty?line/qty:line));
+    addText(row,"span",item.name||item.item_name||item.sku||"Позиция");
+    addText(row,"span",String(qty));
+    addText(row,"span",moneyValue(price));
+    addText(row,"strong",moneyValue(line));
+    table.appendChild(row);
+   }
+  }else{
+   const row=document.createElement("div");row.className="mmw-print-table-row";
+   addText(row,"span","Состав заказа не указан");addText(row,"span","—");addText(row,"span","—");addText(row,"strong",moneyValue(total));table.appendChild(row);
+  }
+  root.appendChild(table);
+  const totalBox=document.createElement("div");totalBox.className="mmw-print-total";addText(totalBox,"span","ИТОГОВАЯ СТОИМОСТЬ");addText(totalBox,"strong",moneyValue(total));root.appendChild(totalBox);
+  if(r.notes)addText(root,"p","Комментарий: "+r.notes,"mmw-print-notes");
+  addText(root,"p","Цены ориентировочные. Выписка не является договором, счётом или подтверждением оплаты.","mmw-print-disclaimer");
+ }else{
+  addText(root,"p",r.message||"Текст обращения не указан.","mmw-print-message");
+ }
+ const foot=document.createElement("footer");foot.className="mmw-print-footer";addText(foot,"strong","MMW");addText(foot,"span","Развитие проектов от возможности до результата");root.appendChild(foot);
+ document.body.appendChild(root);document.body.classList.add("printing-single-receipt");
+ const cleanup=()=>{document.body.classList.remove("printing-single-receipt");root.remove()};
+ window.addEventListener("afterprint",cleanup,{once:true});
+ window.print();
+ setTimeout(()=>{if(document.body.classList.contains("printing-single-receipt"))cleanup()},120000);
+}
 function renderReceipt(data){
  const card=el("receiptCard"),root=el("receiptBody");card.style.display="block";el("securityPanel").style.display=customerSession?"block":"none";root.replaceChildren();
  const orders=Array.isArray(data.orders)?data.orders:(data.order?[data.order]:[]);
@@ -490,13 +598,7 @@ function renderReceipt(data){
    pdfButton.type="button";
    pdfButton.addEventListener("click",event=>{
     event.preventDefault();event.stopPropagation();
-    list.querySelectorAll('[data-print-selected="true"]').forEach(node=>node.removeAttribute("data-print-selected"));
-    details.setAttribute("data-print-selected","true");details.open=true;
-    document.body.classList.add("printing","printing-single");
-    const cleanup=()=>{document.body.classList.remove("printing","printing-single");details.removeAttribute("data-print-selected")};
-    window.addEventListener("afterprint",cleanup,{once:true});
-    window.print();
-    setTimeout(()=>{if(document.body.classList.contains("printing-single"))cleanup()},120000);
+    printSingleRecord(entry, statusLabels);
    });
    details.appendChild(body);list.appendChild(details);
   }
