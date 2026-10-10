@@ -65,6 +65,13 @@
 @media print{body.printing{background:#fff!important;color:#071b17!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}body.printing #lookupSection{padding:0!important}body.printing #lookupSection .wrap{width:100%!important;max-width:none!important}body.printing #receiptCard{display:block!important;position:static!important;width:100%!important;max-width:none!important;padding:0!important;border:1px solid #d5e1d9!important;border-radius:0!important;overflow:visible!important}body.printing #receiptBody{font-family:Arial,Helvetica,sans-serif!important}body.printing .receipt-masthead{background:#071b17!important;color:#fff!important}body.printing .receipt-masthead *{color:inherit!important}body.printing .receipt-monogram{background:#bdebd9!important;color:#071b17!important}body.printing .receipt-meta,body.printing .receipt-table-head{background:#e6f2ec!important}body.printing .receipt-total{background:#071b17!important;color:#fff!important;break-inside:avoid}body.printing .receipt-disclaimer{background:#fff8e9!important;color:#574a2d!important;break-inside:avoid}body.printing .receipt-client-cell,body.printing .receipt-table-row,.receipt-section-title{break-inside:avoid}body.printing .receipt-footer{background:#f2f5ef!important;break-inside:avoid}body.printing .receipt-footer *{color:#43564e!important}body.printing .receipt-footer strong{color:#0b705b!important}body.printing #receiptBody *{box-shadow:none!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-masthead,body.printing #lookupSection #receiptCard #receiptBody .receipt-total{background:#071b17!important;color:#fff!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-masthead *{color:#fff!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-brand small,body.printing #lookupSection #receiptCard #receiptBody .receipt-doc-type,body.printing #lookupSection #receiptCard #receiptBody .receipt-total span{color:#bdebd9!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-monogram{background:#bdebd9!important;color:#071b17!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-total strong{color:#fff!important}body.printing #printReceipt,body.printing .no-print{display:none!important}}
 
 /* Customer profile — MMW-COMPANY account styling */
+.profile-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 22px 20px}
+.profile-actions .profile-pdf-button,.profile-actions .profile-email-button{margin:0;padding:11px 15px;border-radius:999px;border:1px solid #0b705b;background:#0b705b;color:#fff;font-size:11px;font-weight:800;cursor:pointer}
+.profile-actions .profile-pdf-button{background:#fff;color:#0b705b}
+.profile-actions button:disabled{opacity:.6;cursor:wait}
+.profile-email-status{flex-basis:100%;font-size:12px;line-height:1.5;color:#0b705b;overflow-wrap:anywhere}
+@media(max-width:600px){.profile-actions{margin-left:16px;margin-right:16px}.profile-actions button{flex:1 1 100%}}
+
 #receiptCard{border:1px solid #0b705b2b!important;border-radius:24px!important;background:linear-gradient(145deg,#fff 0%,#fbfdfb 72%,#edf7f1 100%);box-shadow:0 18px 42px #071b170b}
 #receiptBody{padding:0 0 4px}
 #receiptBody>.receipt-monogram{width:46px;height:46px;margin:22px 22px 12px;border-radius:14px;background:linear-gradient(135deg,#bdebd9,#e4f6ec);color:#075543;font-size:14px;box-shadow:0 5px 14px #0b705b16}
@@ -300,6 +307,25 @@ function renderReceipt(data){
  ];
  for(const [label,value] of counts){const tile=document.createElement("div");tile.className="profile-stat";addText(tile,"span",label);addText(tile,"strong",String(value));stats.appendChild(tile)}
  root.appendChild(stats);
+ const profileActions=document.createElement("div");profileActions.className="profile-actions no-print";
+ const profilePdf=addText(profileActions,"button","Сохранить выписку профиля в PDF","profile-pdf-button");profilePdf.type="button";
+ profilePdf.addEventListener("click",()=>{
+  document.body.classList.add("printing");
+  const cleanup=()=>document.body.classList.remove("printing");
+  window.addEventListener("afterprint",cleanup,{once:true});
+  window.print();
+  setTimeout(()=>{if(document.body.classList.contains("printing"))cleanup()},120000);
+ });
+ const profileEmail=addText(profileActions,"button","Отправить выписку на email","profile-email-button");profileEmail.type="button";
+ const profileEmailStatus=addText(profileActions,"div","","profile-email-status");profileEmailStatus.setAttribute("role","status");profileEmailStatus.setAttribute("aria-live","polite");
+ profileEmail.addEventListener("click",async()=>{
+  if(!customerSession){profileEmailStatus.textContent="Сначала войдите в профиль.";return}
+  profileEmail.disabled=true;profileEmail.textContent="Отправляем…";profileEmailStatus.textContent="";
+  try{const result=await api("profile-email","POST",{phone:customerSession.phone,code:customerSession.code});profileEmailStatus.textContent=result.message||"Выписка отправлена."}
+  catch(err){profileEmailStatus.textContent=err.message||"Не удалось отправить выписку."}
+  finally{profileEmail.disabled=false;profileEmail.textContent="Отправить выписку на email"}
+ });
+ root.appendChild(profileActions);
  addText(root,"h4","История заявок и обращений","profile-section-label");
  const controls=document.createElement("div");controls.className="profile-filters";
  const search=document.createElement("input");search.type="search";search.placeholder="Поиск по номеру, услуге или тексту";search.setAttribute("aria-label","Поиск по истории");
