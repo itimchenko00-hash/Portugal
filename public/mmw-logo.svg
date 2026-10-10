@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 76" role="img" aria-labelledby="title desc">
+  <title id="title">MMW-COMPANY</title>
+  <desc id="desc">Фирменный знак MMW на графитовой основе с мягким изумрудным акцентом и названием компании.</desc>
+  <g transform="translate(4 6)">
+    <rect width="64" height="64" rx="16" fill="#071b17"/>
+    <path d="M10 45V19h7l8 12 8-12h7v26h-7V30l-8 12-8-12v15z" fill="#bdebd9"/>
+    <path d="M45 19h8v26h-8z" fill="#0f9477"/>
+  </g>
+  <text x="84" y="37" fill="#071b17" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="800" letter-spacing="-1.1">MMW-COMPANY</text>
+  <text x="85" y="56" fill="#64746d" font-family="Inter, Arial, sans-serif" font-size="9.5" font-weight="600" letter-spacing="1.55">PROJECT DEVELOPMENT COMPANY</text>
+</svg>
