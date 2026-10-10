@@ -221,7 +221,7 @@ function renderCart(){
  }
  el("cartTotal").textContent=money(total);
 }
-async function loadCatalog(){try{const data=await api("catalog");catalog=data.items||[];renderCatalog();renderCart();el("catalogStatus").textContent=catalog.length?("В каталоге позиций: "+catalog.length):"Каталог пока пуст.";el("catalogStatus").className="status muted"}catch(e){setStatus("catalogStatus","Не удалось загрузить каталог: "+e.message)}}
+async function loadCatalog(){try{const data=await api("catalog");catalog=data.items||[];setupCatalogFilters();renderCatalog();renderCart();el("catalogStatus").textContent=catalog.length?("В каталоге позиций: "+catalog.length):"Каталог пока пуст.";el("catalogStatus").className="status muted"}catch(e){setStatus("catalogStatus","Не удалось загрузить каталог: "+e.message)}}
 el("orderForm").addEventListener("submit",async e=>{
  e.preventDefault();if(!cart.size){setStatus("orderStatus","Сначала добавьте позицию из каталога.");return}
  if(!el("orderConsent").checked){setStatus("orderStatus","Необходимо подтвердить согласие на обработку данных.");return}
