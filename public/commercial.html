@@ -232,8 +232,8 @@ el("orderForm").addEventListener("submit",async e=>{
  try{
   const d=await api("orders","POST",{customerName:f.get("customerName"),customerPhone:phone,customerEmail:f.get("customerEmail"),organization:f.get("organization"),notes:f.get("notes"),customerAccessCode:sessionCode||typedCode||undefined,items,consentVersion:CONSENT_VERSION});
   cart.clear();renderCart();form.reset();el("repeatCodeWrap").hidden=true;el("repeatAccessCode").required=false;
-  const n=d.notifications||{};const accessInfo=d.order.accessCode?"Код доступа: "+d.order.accessCode+" — сохраните его для входа в «Мои заявки».":"Заявка связана с историей вашего профиля. Для следующих обращений используйте прежний пятизначный код.";
-  setStatus("orderStatus","Заявка №"+d.order.orderNumber+" сохранена. "+accessInfo+"\nЭто заявка на обсуждение, не оплаченный заказ. Email менеджеру: "+(n.email?"принято к отправке":"не подтверждено")+" · Email клиенту: "+(f.get("customerEmail")?(n.customerEmail?"принято к отправке":"не подтверждено"):"не указан")+" · Telegram менеджеру: "+(n.telegram?"отправлено":"не подтверждено"),true)
+  const accessInfo=d.order.accessCode?"Код доступа: "+d.order.accessCode+" — сохраните его для входа в «Мои заявки».":"Заявка связана с историей вашего профиля. Для следующих обращений используйте прежний пятизначный код.";
+  setStatus("orderStatus","Заявка №"+d.order.orderNumber+" сохранена. "+accessInfo+"\nЭто заявка на обсуждение, не оплаченный заказ.",true)
  }catch(err){
   const message=err.message||"Не удалось отправить заявку.";
   if(/профиль|код доступа|кодом доступа|не совпадают|access code|profile exists|заблокирован|пятизначный код/i.test(message)){
@@ -247,7 +247,7 @@ el("clearCart").onclick=()=>{cart.clear();renderCart();setStatus("orderStatus","
 el("inquiryForm").addEventListener("submit",async e=>{
  e.preventDefault();if(!el("inqConsent").checked){setStatus("inquiryStatus","Необходимо подтвердить согласие на обработку данных.");return}
  const form=e.currentTarget;const f=new FormData(form);const submit=form.querySelector('button[type="submit"]');submit.disabled=true;submit.textContent="Отправляем…";
- try{const d=await api("inquiries","POST",{name:f.get("name"),email:f.get("email"),phone:f.get("phone"),organization:f.get("organization"),projectSlug:f.get("projectSlug"),inquiryType:f.get("inquiryType"),message:f.get("message"),consentVersion:CONSENT_VERSION});form.reset();const n=d.notifications||{};setStatus("inquiryStatus","Обращение №"+d.inquiryNumber+" сохранено. Email менеджеру: "+(n.email?"принято к отправке":"не подтверждено")+" · Email клиенту: "+(f.get("email")?(n.customerEmail?"принято к отправке":"не подтверждено"):"не указан")+" · Telegram менеджеру: "+(n.telegram?"отправлено":"не подтверждено"),true)}catch(err){setStatus("inquiryStatus",err.message)}finally{submit.disabled=false;submit.textContent="Отправить обращение"}
+ try{const d=await api("inquiries","POST",{name:f.get("name"),email:f.get("email"),phone:f.get("phone"),organization:f.get("organization"),projectSlug:f.get("projectSlug"),inquiryType:f.get("inquiryType"),message:f.get("message"),consentVersion:CONSENT_VERSION});form.reset();setStatus("inquiryStatus","Обращение №"+d.inquiryNumber+" принято. Мы свяжемся с вами по указанным контактам.",true)}catch(err){setStatus("inquiryStatus",err.message)}finally{submit.disabled=false;submit.textContent="Отправить обращение"}
 });
 function recordNode(kind,r){
  const box=document.createElement("div");box.className="record";
