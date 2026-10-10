@@ -276,7 +276,7 @@ el("changeCodeForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const form=e.currentTarget,f=new FormData(form),currentCode=String(f.get("currentCode")||"").trim(),newCode=String(f.get("newCode")||"").trim(),repeatCode=String(f.get("repeatCode")||"").trim();
  if(!customerSession){setStatus("changeCodeStatus","Сначала войдите в профиль.");return}
- if(!/^\\d{5}$/.test(currentCode)||!/^\\d{5}$/.test(newCode)){setStatus("changeCodeStatus","Оба кода должны состоять ровно из пяти цифр.");return}
+ if(!/^\d{5}$/.test(currentCode)||!/^\d{5}$/.test(newCode)){setStatus("changeCodeStatus","Оба кода должны состоять ровно из пяти цифр.");return}
  if(newCode!==repeatCode){setStatus("changeCodeStatus","Новые коды не совпадают.");return}
  if(currentCode===newCode){setStatus("changeCodeStatus","Новый код должен отличаться от текущего.");return}
  const button=form.querySelector('button[type="submit"]');button.disabled=true;button.textContent="Сохраняем…";
