@@ -261,6 +261,23 @@
  body.printing-single #receiptBody>.receipt-footer{margin-top:18px!important}
 }
 
+/* Refined premium surfaces: softer corners, quieter borders, more breathing room */
+@media print{
+ #mmwSinglePrintReceipt .mmw-print-masthead{border-radius:10px 10px 2px 2px!important;padding:15px 17px!important}
+ #mmwSinglePrintReceipt .mmw-print-number{border-radius:9px!important;border-color:#e0e9e2!important;background:#f5f8f5!important;padding:14px 16px!important}
+ #mmwSinglePrintReceipt .mmw-print-client{gap:9px!important}
+ #mmwSinglePrintReceipt .mmw-print-cell{border-radius:7px!important;border-color:#e5ebe6!important;padding:11px 13px!important;background:#fff!important}
+ #mmwSinglePrintReceipt .mmw-print-status-row{border-radius:7px!important;border-color:#e0e9e2!important;background:#f7f9f7!important;padding:10px 13px!important}
+ #mmwSinglePrintReceipt .mmw-print-status{border-radius:999px!important;border-color:#d5e8dc!important;padding:5px 10px!important}
+ #mmwSinglePrintReceipt .mmw-print-table{overflow:hidden;border:1px solid #e0e8e2!important;border-radius:8px!important}
+ #mmwSinglePrintReceipt .mmw-print-table-head{background:#eef5f0!important}
+ #mmwSinglePrintReceipt .mmw-print-table-head,#mmwSinglePrintReceipt .mmw-print-table-row{padding:11px 12px!important}
+ #mmwSinglePrintReceipt .mmw-print-table-row{border-top:1px solid #edf1ed!important}
+ #mmwSinglePrintReceipt .mmw-print-total{border-radius:8px!important;padding:15px 16px!important;background:#0a2821!important}
+ #mmwSinglePrintReceipt .mmw-print-notes,#mmwSinglePrintReceipt .mmw-print-message{border-radius:7px!important;background:#f7f9f7!important;padding:12px 14px!important}
+ #mmwSinglePrintReceipt .mmw-print-disclaimer{border-radius:0 7px 7px 0!important;background:#fbf7ed!important}
+ #mmwSinglePrintReceipt .mmw-print-footer{border-top-color:#e5ebe6!important}
+}
 /* Restored MMW single-request receipt style */
 #mmwSinglePrintReceipt{display:none}
 @media print{
