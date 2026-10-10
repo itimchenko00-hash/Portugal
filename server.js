@@ -17,10 +17,10 @@ const server=http.createServer(async(req,res)=>{
     if(req.method!=="GET"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
    }else if(req.method!=="POST"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
    const ip=(req.headers["x-forwarded-for"]||req.socket.remoteAddress||"unknown").toString().split(",")[0].trim();
-   const now=Date.now(),windowMs=10*60*1000,max=endpoint==="snapshot"||endpoint==="status"||endpoint==="order-access"?8:30;
-   const recent=(commercialAttempts.get(ip)||[]).filter(t=>now-t<windowMs);
-   if(recent.length>=max){res.writeHead(429,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Слишком много запросов. Повторите позже."}));}
-   recent.push(now);commercialAttempts.set(ip,recent);
+   const now=Date.now(),windowMs=10*60*1000,rateKey=ip+":"+endpoint,max=endpoint==="change-code"?6:endpoint==="order-access"?30:endpoint==="snapshot"||endpoint==="status"?12:20;
+   const recent=(commercialAttempts.get(rateKey)||[]).filter(t=>now-t<windowMs);
+   if(recent.length>=max){res.writeHead(429,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Слишком много запросов к этому действию. Повторите позже."}));}
+   recent.push(now);commercialAttempts.set(rateKey,recent);
    const base=process.env.SUPABASE_FUNCTION_URL,anon=process.env.SUPABASE_ANON_KEY,publishable=process.env.SUPABASE_PUBLISHABLE_KEY;
    if(!base||!anon||!publishable){res.writeHead(503,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Коммерческий сервис ещё не настроен."}));}
    let body;
