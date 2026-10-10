@@ -57,19 +57,6 @@
 @media(max-width:600px){#inquiry .panel{border-radius:19px;padding:17px}#inquiry .panel:before{right:16px;top:14px;font-size:7px}#inquiryForm .formgrid{gap:12px}#inquiryForm .field input,#inquiryForm .field textarea,#inquiryForm .field select{font-size:16px}#inquiryForm button[type=submit]{width:100%}}
 @media(prefers-reduced-motion:reduce){#inquiryForm .field input,#inquiryForm .field textarea,#inquiryForm .field select,#inquiryForm button[type=submit]{transition:none}}
 
-/* MMW-COMPANY client statement actions */
-.statement-actions{display:grid;grid-template-columns:auto minmax(260px,1fr);gap:14px;align-items:start;margin:0 24px 22px;padding:16px;border:1px solid #cfe2d5;border-radius:14px;background:linear-gradient(135deg,#f7fbf8,#edf6f0)}
-.statement-primary,.statement-secondary{min-height:42px;padding:11px 16px;border:0;border-radius:10px;background:linear-gradient(125deg,#0b3d31,#0b705b);color:#fff;font-weight:800;font-size:12px;cursor:pointer}
-.statement-email-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
-.statement-email-form label,.statement-email-help,.statement-email-status{grid-column:1/-1}
-.statement-email-form label{font-size:12px;font-weight:800;color:#18352b}
-.statement-email-form input{width:100%;min-width:0;min-height:42px;padding:10px 12px;border:1px solid #c8d9ce;border-radius:9px;background:#fff;font:inherit}
-.statement-email-help{font-size:10px;color:#64776c;line-height:1.5}
-.statement-email-status{font-size:11px;font-weight:700;color:#9b3f32;overflow-wrap:anywhere}
-.statement-email-status.is-success{color:#0b705b}
-.statement-primary:disabled,.statement-secondary:disabled{opacity:.6;cursor:wait}
-@media(max-width:640px){.statement-actions{grid-template-columns:1fr;margin:0 16px 18px;padding:12px}.statement-primary{width:100%}.statement-email-form{grid-template-columns:1fr}.statement-secondary{width:100%}}
-@media print{body.printing .statement-actions{display:none!important}body.printing #receiptBody{break-inside:auto!important}}
 /* MMW-COMPANY branded request form and printable receipt */
 #repeatCodeWrap[hidden]{display:none!important}#orderForm .formgrid{gap:14px}#orderForm .field input,#orderForm .field textarea{background:#fbfdfb;border-color:#0b705b30}#orderForm .field input:focus,#orderForm .field textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px #0f94771c}#orderForm button[type=submit],#printReceipt{background:linear-gradient(135deg,#0b705b,#0f9477);box-shadow:0 8px 18px #0b705b20}
 #receiptCard{overflow:hidden;border-color:#0b705b35;padding:0!important}#receiptBody{color:var(--ink)}.receipt-masthead{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 24px;background:#071b17;color:#fff;border-bottom:4px solid #0f9477}.receipt-brand{display:flex;align-items:center;gap:12px}.receipt-brand strong{display:block;font-size:15px;letter-spacing:-.03em}.receipt-brand small{display:block;max-width:210px;margin-top:4px;color:#bdebd9;font-size:8px;line-height:1.4;letter-spacing:.09em}.receipt-monogram{width:42px;height:42px;border-radius:12px;background:#bdebd9;color:#071b17;display:grid;place-items:center;font-weight:950;letter-spacing:-.07em}.receipt-doc-type{font-size:9px;font-weight:850;letter-spacing:.12em;text-align:right;color:#bdebd9}.receipt-kicker,#receiptBody>.tag{margin:22px 24px 0}.receipt-title{font-size:30px!important;letter-spacing:-.055em!important;margin:8px 24px 18px!important}.receipt-meta{margin:0 24px 22px;padding:14px 16px;border-radius:12px;background:#edf5ef;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}.receipt-label{font-size:8px!important;letter-spacing:.1em;color:#63736c;text-transform:uppercase;font-weight:850}.receipt-value{font-size:12px;font-weight:750}.receipt-section-title{margin:22px 24px 10px;font-size:12px;letter-spacing:-.01em;color:#0b705b}.receipt-client{margin:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.receipt-client-cell{display:grid;gap:4px;padding:12px;border:1px solid #071b1718;border-radius:10px;overflow-wrap:anywhere}.receipt-client-cell strong{font-size:11px}.receipt-table{margin:0 24px;border:1px solid #071b171c;border-radius:10px;overflow:hidden}.receipt-table-head,.receipt-table-row{display:grid;grid-template-columns:minmax(0,1fr) 56px 100px;gap:10px;align-items:center;padding:11px 12px}.receipt-table-head{background:#e6f2ec;color:#0b705b;font-size:8px;font-weight:900;letter-spacing:.09em}.receipt-table-row{border-top:1px solid #071b1714;font-size:11px}.receipt-table-row span:first-child{overflow-wrap:anywhere}.receipt-table-row span:nth-child(2){text-align:center}.receipt-table-row strong{text-align:right;white-space:nowrap}.receipt-total{margin:14px 24px 0;padding:16px;border-radius:12px;background:#071b17;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px}.receipt-total span{font-size:11px;color:#bdebd9}.receipt-total strong{font-size:22px;letter-spacing:-.04em}.receipt-disclaimer{margin:14px 24px 0;padding:12px 14px;border-left:3px solid #c6aa6b;background:#fff8e9;color:#574a2d;font-size:10px;line-height:1.6}.receipt-notes{margin:0 24px;padding:12px;background:#f5f8f5;border-radius:10px;font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}.receipt-footer{margin-top:24px;padding:18px 24px;background:#f2f5ef;border-top:1px solid #071b1718;display:grid;gap:4px}.receipt-footer strong{font-size:11px;color:#0b705b}.receipt-footer span{font-size:10px;color:#43564e}.receipt-footer small{margin-top:7px;color:#63736c;font-size:9px;line-height:1.5}
@@ -78,13 +65,6 @@
 @media print{body.printing{background:#fff!important;color:#071b17!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}body.printing #lookupSection{padding:0!important}body.printing #lookupSection .wrap{width:100%!important;max-width:none!important}body.printing #receiptCard{display:block!important;position:static!important;width:100%!important;max-width:none!important;padding:0!important;border:1px solid #d5e1d9!important;border-radius:0!important;overflow:visible!important}body.printing #receiptBody{font-family:Arial,Helvetica,sans-serif!important}body.printing .receipt-masthead{background:#071b17!important;color:#fff!important}body.printing .receipt-masthead *{color:inherit!important}body.printing .receipt-monogram{background:#bdebd9!important;color:#071b17!important}body.printing .receipt-meta,body.printing .receipt-table-head{background:#e6f2ec!important}body.printing .receipt-total{background:#071b17!important;color:#fff!important;break-inside:avoid}body.printing .receipt-disclaimer{background:#fff8e9!important;color:#574a2d!important;break-inside:avoid}body.printing .receipt-client-cell,body.printing .receipt-table-row,.receipt-section-title{break-inside:avoid}body.printing .receipt-footer{background:#f2f5ef!important;break-inside:avoid}body.printing .receipt-footer *{color:#43564e!important}body.printing .receipt-footer strong{color:#0b705b!important}body.printing #receiptBody *{box-shadow:none!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-masthead,body.printing #lookupSection #receiptCard #receiptBody .receipt-total{background:#071b17!important;color:#fff!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-masthead *{color:#fff!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-brand small,body.printing #lookupSection #receiptCard #receiptBody .receipt-doc-type,body.printing #lookupSection #receiptCard #receiptBody .receipt-total span{color:#bdebd9!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-monogram{background:#bdebd9!important;color:#071b17!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-total strong{color:#fff!important}body.printing #printReceipt,body.printing .no-print{display:none!important}}
 
 /* Customer profile — MMW-COMPANY account styling */
-.profile-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 22px 20px}
-.profile-actions .profile-pdf-button,.profile-actions .profile-email-button{margin:0;padding:11px 15px;border-radius:999px;border:1px solid #0b705b;background:#0b705b;color:#fff;font-size:11px;font-weight:800;cursor:pointer}
-.profile-actions .profile-pdf-button{background:#fff;color:#0b705b}
-.profile-actions button:disabled{opacity:.6;cursor:wait}
-.profile-email-status{flex-basis:100%;font-size:12px;line-height:1.5;color:#0b705b;overflow-wrap:anywhere}
-@media(max-width:600px){.profile-actions{margin-left:16px;margin-right:16px}.profile-actions button{flex:1 1 100%}}
-
 #receiptCard{border:1px solid #0b705b2b!important;border-radius:24px!important;background:linear-gradient(145deg,#fff 0%,#fbfdfb 72%,#edf7f1 100%);box-shadow:0 18px 42px #071b170b}
 #receiptBody{padding:0 0 4px}
 #receiptBody>.receipt-monogram{width:46px;height:46px;margin:22px 22px 12px;border-radius:14px;background:linear-gradient(135deg,#bdebd9,#e4f6ec);color:#075543;font-size:14px;box-shadow:0 5px 14px #0b705b16}
@@ -149,96 +129,6 @@
  body.printing-single .profile-record-details{display:block!important}
  body.printing-single .profile-pdf-button{display:none!important}
 }
-
-/* Refined MMW client cabinet — editorial, calm, and consistent */
-#lookupSection{background:linear-gradient(180deg,#f2f7f3 0%,#e9f1eb 100%)!important}
-#lookupSection>.wrap{max-width:1160px}
-#lookupSection .head{align-items:end;margin-bottom:28px}
-#lookupSection .head h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.055em;line-height:1.03}
-#lookupSection .head p{max-width:560px;color:#52665b;line-height:1.75}
-#lookupSection .layout{align-items:start;gap:24px}
-#lookupSection .layout>.panel{border:1px solid #d7e5db;border-radius:22px;background:rgba(255,255,255,.9);box-shadow:0 14px 38px #09291b0a}
-#lookupForm label{font-size:11px;font-weight:800;color:#304a3d}
-#lookupForm input{min-height:48px;border:1px solid #d1e0d6;border-radius:12px;background:#fbfdfb}
-#lookupForm input:focus{border-color:#0b705b;box-shadow:0 0 0 4px #0b705b14;outline:0}
-#lookupForm button[type=submit]{min-height:46px;border-radius:12px;letter-spacing:.01em}
-#receiptCard{border:1px solid #d4e3d8!important;border-radius:24px!important;background:#fff!important;box-shadow:0 18px 50px #09291b0d!important}
-#receiptBody>.receipt-monogram{width:52px;height:52px;margin:26px 26px 14px;border-radius:16px;font-size:15px;letter-spacing:-.06em}
-#receiptBody>.receipt-title{margin:0 26px 8px!important;font-size:clamp(27px,3.4vw,38px)!important;letter-spacing:-.06em!important}
-#receiptBody>.muted{margin:0 26px 22px;padding:0 0 20px;border-bottom:1px solid #e4ece6;color:#66786d;font-size:12px;line-height:1.6}
-.statement-actions{display:grid;grid-template-columns:minmax(160px,.7fr) minmax(280px,1.3fr);align-items:start;gap:18px;margin:0 26px 24px;padding:20px;border:1px solid #dce8df;border-radius:18px;background:linear-gradient(135deg,#f6faf7,#edf5ef)}
-.statement-primary{min-height:46px;border-radius:12px;background:#0b705b;box-shadow:none;font-size:12px}
-.statement-email-form{grid-template-columns:minmax(0,1fr) auto;gap:9px}
-.statement-email-form label{font-size:11px;letter-spacing:.01em}
-.statement-email-form input{min-height:46px;border-radius:11px;border-color:#cfdfd4}
-.statement-secondary{min-height:46px;border-radius:11px;background:#fff;color:#0b705b;border:1px solid #b9d5c5}
-.statement-email-help{font-size:10px;line-height:1.6;color:#66786d}
-.statement-email-status{padding-top:3px;font-size:11px}
-.profile-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 26px 28px}
-.profile-stat{min-height:102px;padding:17px 18px;border:1px solid #e0e9e2;border-radius:16px;background:#fff;box-shadow:0 5px 18px #09291b05}
-.profile-stat span{font-size:10px;letter-spacing:.01em;color:#68796f}
-.profile-stat strong{font-size:29px;letter-spacing:-.055em;color:#0b705b}
-.profile-section-label{margin:0 26px 14px;font-size:11px;letter-spacing:.09em;color:#284c3d}
-.profile-filters{grid-template-columns:minmax(180px,2fr) repeat(4,minmax(105px,1fr));gap:9px;margin:0 26px 14px}
-.profile-filters input,.profile-filters select{min-height:43px;border-radius:11px;border-color:#dbe6de;background:#fbfdfb;font-size:11px}
-.profile-results-line{margin:0 26px 12px;color:#718178;font-size:11px}
-.profile-record-list{gap:10px;margin:0 26px 14px}
-.profile-record-compact{margin:0;padding:0;border:1px solid #dfe9e2;border-radius:15px;background:#fff;box-shadow:none;overflow:hidden}
-.profile-record-summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;cursor:pointer;list-style:none}
-.profile-record-summary::-webkit-details-marker{display:none}
-.profile-record-summary:after{content:"+";display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:#edf5ef;color:#0b705b;font-size:18px;font-weight:500}
-.profile-record[open]>.profile-record-summary:after{content:"−"}
-.profile-record-main{display:grid;gap:5px;min-width:0}
-.profile-record-main strong{font-size:13px;letter-spacing:-.01em;color:#173b2e}
-.profile-record-main .meta{margin:0;font-size:10px;color:#7b8a81}
-.profile-record-summary .profile-status{margin:0;white-space:nowrap}
-.profile-record-details{padding:4px 18px 18px;border-top:1px solid #edf1ed}
-.profile-record-details>p{font-size:12px;line-height:1.75;color:#52665b}
-.profile-record-details>strong{display:block;margin-top:10px;font-size:11px;color:#0b705b}
-.profile-record-details .profile-pdf-button{min-height:39px;margin-top:12px;padding:10px 14px;border-radius:10px;font-size:11px}
-.profile-empty{margin:0 26px 14px;padding:26px 18px;border:1px dashed #cbdccf;border-radius:15px;text-align:center;color:#6b7e72;font-size:12px}
-.profile-reset{margin:0 26px 18px;padding:9px 13px;border:1px solid #d1e0d6;border-radius:10px;background:#fff;color:#0b705b;font-size:11px;font-weight:800;cursor:pointer}
-#receiptBody>.receipt-footer{margin-top:24px;padding:20px 26px;background:#f6f9f6;border-top:1px solid #e1e9e3}
-#receiptBody>.receipt-footer strong{font-size:12px;letter-spacing:-.01em}
-@media(max-width:820px){
- .statement-actions{grid-template-columns:1fr}
- .profile-filters{grid-template-columns:repeat(2,minmax(0,1fr))}
- .profile-filters input{grid-column:1/-1}
- .profile-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:600px){
- #lookupSection .head{margin-bottom:20px}
- #lookupSection .layout{gap:16px}
- #receiptBody>.receipt-monogram{margin:20px 17px 12px}
- #receiptBody>.receipt-title{margin:0 17px 8px!important;font-size:28px!important}
- #receiptBody>.muted{margin:0 17px 18px;padding-bottom:16px}
- .statement-actions{margin:0 12px 20px;padding:14px;border-radius:15px}
- .statement-email-form{grid-template-columns:1fr}
- .statement-email-form label,.statement-email-help,.statement-email-status{grid-column:1}
- .profile-stats{margin:0 12px 22px;gap:8px}
- .profile-stat{min-height:88px;padding:13px}
- .profile-stat strong{font-size:25px}
- .profile-section-label{margin:0 16px 12px}
- .profile-filters{margin:0 12px 12px;gap:7px}
- .profile-filters input,.profile-filters select{padding:10px 9px;font-size:10px}
- .profile-results-line{margin:0 12px 10px}
- .profile-record-list{margin:0 12px 12px}
- .profile-record-summary{padding:14px 12px;gap:8px}
- .profile-record-main strong{font-size:12px}
- .profile-record-summary .profile-status{padding:5px 7px;font-size:9px}
- .profile-record-details{padding:4px 13px 14px}
- .profile-empty{margin:0 12px 12px}
- .profile-reset{margin:0 12px 16px}
- #receiptBody>.receipt-footer{padding:17px}
-}
-@media print{
- body.printing #lookupSection{background:#fff!important}
- body.printing #receiptCard{box-shadow:none!important}
- body.printing .statement-actions{display:none!important}
- body.printing .profile-record-summary:after{display:none!important}
- body.printing .profile-record{margin-bottom:8px}
-}
-
 </style>
 </head>
 <body>
@@ -401,23 +291,6 @@ function renderReceipt(data){
  addText(root,"div","MMW-COMPANY","receipt-monogram");
  addText(root,"h3","Мой кабинет","receipt-title");
  addText(root,"p","Клиентский профиль · "+phone,"muted");
- const statementActions=document.createElement("div");statementActions.className="statement-actions no-print";
- const pdfAll=addText(statementActions,"button","Сохранить выписку в PDF","statement-primary");pdfAll.type="button";
- pdfAll.addEventListener("click",()=>{const records=[...root.querySelectorAll(".profile-record")],previous=records.map(node=>node.open);records.forEach(node=>node.open=true);document.body.classList.add("printing");let cleaned=false;const cleanup=()=>{if(cleaned)return;cleaned=true;document.body.classList.remove("printing");records.forEach((node,index)=>node.open=previous[index])};window.addEventListener("afterprint",cleanup,{once:true});window.print();setTimeout(cleanup,120000)});
- const emailForm=document.createElement("form");emailForm.className="statement-email-form";
- const emailLabel=addText(emailForm,"label","Отправить выписку на email");emailLabel.htmlFor="statementEmailAddress";
- const emailInput=document.createElement("input");emailInput.id="statementEmailAddress";emailInput.type="email";emailInput.required=true;emailInput.maxLength=254;emailInput.autocomplete="email";emailInput.placeholder="Email, указанный в заявке";
- const knownEmail=(orders.map(o=>o.customerEmail||o.customer_email).concat(inquiries.map(i=>i.email)).find(v=>typeof v==="string"&&v.includes("@")))||"";
- emailInput.value=knownEmail;emailInput.setAttribute("aria-describedby","statementEmailHelp");emailForm.appendChild(emailInput);
- const emailHelp=addText(emailForm,"small","Отправка доступна только на email, который уже указан в истории профиля.","statement-email-help");emailHelp.id="statementEmailHelp";
- const emailSubmit=addText(emailForm,"button","Отправить выписку","statement-secondary");emailSubmit.type="submit";emailForm.appendChild(emailSubmit);
- const emailStatus=addText(emailForm,"div","","statement-email-status");emailStatus.setAttribute("role","status");emailStatus.setAttribute("aria-live","polite");
- emailForm.addEventListener("submit",async event=>{event.preventDefault();if(!customerSession){emailStatus.textContent="Сначала войдите в профиль.";return}emailSubmit.disabled=true;emailSubmit.textContent="Отправляем…";emailStatus.textContent="";
-  try{await api("statement-email","POST",{phone:customerSession.phone,code:customerSession.code,email:emailInput.value.trim()});emailStatus.textContent="Выписка отправлена на указанный email.";emailStatus.classList.add("is-success")}
-  catch(err){emailStatus.textContent=err.message||"Не удалось отправить выписку.";emailStatus.classList.remove("is-success")}
-  finally{emailSubmit.disabled=false;emailSubmit.textContent="Отправить выписку"}
- });
- statementActions.append(pdfAll,emailForm);root.appendChild(statementActions);
  const stats=document.createElement("div");stats.className="profile-stats";
  const counts=[
   ["Всего записей",entries.length],
