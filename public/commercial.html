@@ -190,6 +190,18 @@
  body.printing .receipt-footer small{font-size:8px!important}
 }
 
+
+/* Refined MMW-COMPANY customer statement */
+#receiptBody>.receipt-masthead{margin:0 0 0;padding:22px 24px;border-radius:23px 23px 0 0}
+#receiptBody>.receipt-kicker{display:block;margin:24px 24px 0;color:#0b705b;font-size:9px;font-weight:900;letter-spacing:.14em}
+#receiptBody>.receipt-title{margin:8px 24px 18px!important;font-size:clamp(26px,3.5vw,36px)!important;line-height:1.04!important}
+#receiptBody>.receipt-meta{margin:0 24px 16px}
+.receipt-actions{display:flex;justify-content:flex-end;margin:0 24px 20px}
+.profile-pdf-button{border:1px solid #0b705b30;border-radius:999px;background:#e6f2ec;color:#075543;padding:11px 16px;font-size:11px;font-weight:850;cursor:pointer;transition:background .18s,transform .18s}
+.profile-pdf-button:hover{background:#d5eadf;transform:translateY(-1px)}
+#receiptBody>.profile-section-label{margin-top:24px}
+@media(max-width:600px){#receiptBody>.receipt-masthead{padding:17px 16px;border-radius:18px 18px 0 0}#receiptBody>.receipt-kicker{margin:20px 16px 0}#receiptBody>.receipt-title{margin:8px 16px 16px!important}#receiptBody>.receipt-meta{margin:0 16px 14px;grid-template-columns:1fr}#receiptBody>.receipt-actions{margin:0 16px 18px}.receipt-actions .profile-pdf-button{width:100%}}
+@media print{body.printing #receiptBody>.receipt-actions{display:none!important}body.printing #receiptBody>.receipt-masthead{border-radius:0!important}body.printing #receiptBody>.receipt-kicker{margin-top:18px!important}}
 </style>
 </head>
 <body>
@@ -349,9 +361,18 @@ function renderReceipt(data){
   entries.push({kind:"inquiry",kindLabel:"Обращение",number:i.inquiry_number||i.inquiryNumber||"—",status:i.status||"new",date:i.created_at||i.createdAt||"",record:i,search:[i.inquiry_number,i.inquiryNumber,i.name,i.phone,i.email,i.project_slug,i.inquiry_type,i.message].join(" ")});
  }
  entries.sort((x,y)=>new Date(y.date||0)-new Date(x.date||0));
- addText(root,"div","MMW-COMPANY","receipt-monogram");
- addText(root,"h3","Мой кабинет","receipt-title");
- addText(root,"p","Клиентский профиль · "+phone,"muted");
+ const masthead=document.createElement("div");masthead.className="receipt-masthead";
+ const brand=document.createElement("div");brand.className="receipt-brand";
+ addText(brand,"div","MMW","receipt-monogram");
+ const brandCopy=document.createElement("div");addText(brandCopy,"strong","MMW-COMPANY");addText(brandCopy,"small","РАЗВИТИЕ ПРОЕКТОВ ОТ ВОЗМОЖНОСТИ ДО РЕЗУЛЬТАТА");brand.appendChild(brandCopy);
+ masthead.appendChild(brand);addText(masthead,"div","КЛИЕНТСКИЙ ДОКУМЕНТ","receipt-doc-type");root.appendChild(masthead);
+ addText(root,"div","ВЫПИСКА ПО ЗАЯВКАМ И ОБРАЩЕНИЯМ","receipt-kicker");
+ addText(root,"h3","История взаимодействия","receipt-title");
+ const documentMeta=document.createElement("div");documentMeta.className="receipt-meta";
+ const metaDate=document.createElement("div");addText(metaDate,"div","Сформировано","receipt-label");addText(metaDate,"div",new Date().toLocaleString("uk-UA",{dateStyle:"long",timeStyle:"short"}),"receipt-value");documentMeta.appendChild(metaDate);
+ const metaClient=document.createElement("div");addText(metaClient,"div","Профиль клиента","receipt-label");addText(metaClient,"div",phone,"receipt-value");documentMeta.appendChild(metaClient);root.appendChild(documentMeta);
+ const actions=document.createElement("div");actions.className="receipt-actions no-print";
+ const pdfAll=addText(actions,"button","Сохранить выписку в PDF","profile-pdf-button");pdfAll.type="button";pdfAll.addEventListener("click",()=>{document.body.classList.add("printing");const cleanup=()=>document.body.classList.remove("printing");window.addEventListener("afterprint",cleanup,{once:true});window.print();setTimeout(cleanup,120000)});root.appendChild(actions);
  const stats=document.createElement("div");stats.className="profile-stats";
  const counts=[
   ["Всего записей",entries.length],
@@ -361,7 +382,8 @@ function renderReceipt(data){
  ];
  for(const [label,value] of counts){const tile=document.createElement("div");tile.className="profile-stat";addText(tile,"span",label);addText(tile,"strong",String(value));stats.appendChild(tile)}
  root.appendChild(stats);
- addText(root,"h4","История заявок и обращений","profile-section-label");
+ addText(root,"h4","Сводка по профилю","profile-section-label");
+ addText(root,"h4","Детализация записей","profile-section-label");
  const controls=document.createElement("div");controls.className="profile-filters";
  const search=document.createElement("input");search.type="search";search.placeholder="Поиск по номеру, услуге или тексту";search.setAttribute("aria-label","Поиск по истории");
  const kind=document.createElement("select");kind.setAttribute("aria-label","Тип записи");
