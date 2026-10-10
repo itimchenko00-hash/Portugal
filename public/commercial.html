@@ -57,6 +57,19 @@
 @media(max-width:600px){#inquiry .panel{border-radius:19px;padding:17px}#inquiry .panel:before{right:16px;top:14px;font-size:7px}#inquiryForm .formgrid{gap:12px}#inquiryForm .field input,#inquiryForm .field textarea,#inquiryForm .field select{font-size:16px}#inquiryForm button[type=submit]{width:100%}}
 @media(prefers-reduced-motion:reduce){#inquiryForm .field input,#inquiryForm .field textarea,#inquiryForm .field select,#inquiryForm button[type=submit]{transition:none}}
 
+/* MMW-COMPANY client statement actions */
+.statement-actions{display:grid;grid-template-columns:auto minmax(260px,1fr);gap:14px;align-items:start;margin:0 24px 22px;padding:16px;border:1px solid #cfe2d5;border-radius:14px;background:linear-gradient(135deg,#f7fbf8,#edf6f0)}
+.statement-primary,.statement-secondary{min-height:42px;padding:11px 16px;border:0;border-radius:10px;background:linear-gradient(125deg,#0b3d31,#0b705b);color:#fff;font-weight:800;font-size:12px;cursor:pointer}
+.statement-email-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+.statement-email-form label,.statement-email-help,.statement-email-status{grid-column:1/-1}
+.statement-email-form label{font-size:12px;font-weight:800;color:#18352b}
+.statement-email-form input{width:100%;min-width:0;min-height:42px;padding:10px 12px;border:1px solid #c8d9ce;border-radius:9px;background:#fff;font:inherit}
+.statement-email-help{font-size:10px;color:#64776c;line-height:1.5}
+.statement-email-status{font-size:11px;font-weight:700;color:#9b3f32;overflow-wrap:anywhere}
+.statement-email-status.is-success{color:#0b705b}
+.statement-primary:disabled,.statement-secondary:disabled{opacity:.6;cursor:wait}
+@media(max-width:640px){.statement-actions{grid-template-columns:1fr;margin:0 16px 18px;padding:12px}.statement-primary{width:100%}.statement-email-form{grid-template-columns:1fr}.statement-secondary{width:100%}}
+@media print{body.printing .statement-actions{display:none!important}body.printing #receiptBody{break-inside:auto!important}}
 /* MMW-COMPANY branded request form and printable receipt */
 #repeatCodeWrap[hidden]{display:none!important}#orderForm .formgrid{gap:14px}#orderForm .field input,#orderForm .field textarea{background:#fbfdfb;border-color:#0b705b30}#orderForm .field input:focus,#orderForm .field textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px #0f94771c}#orderForm button[type=submit],#printReceipt{background:linear-gradient(135deg,#0b705b,#0f9477);box-shadow:0 8px 18px #0b705b20}
 #receiptCard{overflow:hidden;border-color:#0b705b35;padding:0!important}#receiptBody{color:var(--ink)}.receipt-masthead{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:22px 24px;background:#071b17;color:#fff;border-bottom:4px solid #0f9477}.receipt-brand{display:flex;align-items:center;gap:12px}.receipt-brand strong{display:block;font-size:15px;letter-spacing:-.03em}.receipt-brand small{display:block;max-width:210px;margin-top:4px;color:#bdebd9;font-size:8px;line-height:1.4;letter-spacing:.09em}.receipt-monogram{width:42px;height:42px;border-radius:12px;background:#bdebd9;color:#071b17;display:grid;place-items:center;font-weight:950;letter-spacing:-.07em}.receipt-doc-type{font-size:9px;font-weight:850;letter-spacing:.12em;text-align:right;color:#bdebd9}.receipt-kicker,#receiptBody>.tag{margin:22px 24px 0}.receipt-title{font-size:30px!important;letter-spacing:-.055em!important;margin:8px 24px 18px!important}.receipt-meta{margin:0 24px 22px;padding:14px 16px;border-radius:12px;background:#edf5ef;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}.receipt-label{font-size:8px!important;letter-spacing:.1em;color:#63736c;text-transform:uppercase;font-weight:850}.receipt-value{font-size:12px;font-weight:750}.receipt-section-title{margin:22px 24px 10px;font-size:12px;letter-spacing:-.01em;color:#0b705b}.receipt-client{margin:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.receipt-client-cell{display:grid;gap:4px;padding:12px;border:1px solid #071b1718;border-radius:10px;overflow-wrap:anywhere}.receipt-client-cell strong{font-size:11px}.receipt-table{margin:0 24px;border:1px solid #071b171c;border-radius:10px;overflow:hidden}.receipt-table-head,.receipt-table-row{display:grid;grid-template-columns:minmax(0,1fr) 56px 100px;gap:10px;align-items:center;padding:11px 12px}.receipt-table-head{background:#e6f2ec;color:#0b705b;font-size:8px;font-weight:900;letter-spacing:.09em}.receipt-table-row{border-top:1px solid #071b1714;font-size:11px}.receipt-table-row span:first-child{overflow-wrap:anywhere}.receipt-table-row span:nth-child(2){text-align:center}.receipt-table-row strong{text-align:right;white-space:nowrap}.receipt-total{margin:14px 24px 0;padding:16px;border-radius:12px;background:#071b17;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px}.receipt-total span{font-size:11px;color:#bdebd9}.receipt-total strong{font-size:22px;letter-spacing:-.04em}.receipt-disclaimer{margin:14px 24px 0;padding:12px 14px;border-left:3px solid #c6aa6b;background:#fff8e9;color:#574a2d;font-size:10px;line-height:1.6}.receipt-notes{margin:0 24px;padding:12px;background:#f5f8f5;border-radius:10px;font-size:11px;white-space:pre-wrap;overflow-wrap:anywhere}.receipt-footer{margin-top:24px;padding:18px 24px;background:#f2f5ef;border-top:1px solid #071b1718;display:grid;gap:4px}.receipt-footer strong{font-size:11px;color:#0b705b}.receipt-footer span{font-size:10px;color:#43564e}.receipt-footer small{margin-top:7px;color:#63736c;font-size:9px;line-height:1.5}
@@ -298,6 +311,23 @@ function renderReceipt(data){
  addText(root,"div","MMW-COMPANY","receipt-monogram");
  addText(root,"h3","Мой кабинет","receipt-title");
  addText(root,"p","Клиентский профиль · "+phone,"muted");
+ const statementActions=document.createElement("div");statementActions.className="statement-actions no-print";
+ const pdfAll=addText(statementActions,"button","Сохранить выписку в PDF","statement-primary");pdfAll.type="button";
+ pdfAll.addEventListener("click",()=>{document.body.classList.add("printing");const cleanup=()=>document.body.classList.remove("printing");window.addEventListener("afterprint",cleanup,{once:true});window.print();setTimeout(cleanup,120000)});
+ const emailForm=document.createElement("form");emailForm.className="statement-email-form";
+ const emailLabel=addText(emailForm,"label","Отправить выписку на email");emailLabel.htmlFor="statementEmailAddress";
+ const emailInput=document.createElement("input");emailInput.id="statementEmailAddress";emailInput.type="email";emailInput.required=true;emailInput.maxLength=254;emailInput.autocomplete="email";emailInput.placeholder="Email, указанный в заявке";
+ const knownEmail=(orders.map(o=>o.customerEmail||o.customer_email).concat(inquiries.map(i=>i.email)).find(v=>typeof v==="string"&&v.includes("@")))||"";
+ emailInput.value=knownEmail;emailInput.setAttribute("aria-describedby","statementEmailHelp");emailForm.appendChild(emailInput);
+ const emailHelp=addText(emailForm,"small","Отправка доступна только на email, который уже указан в истории профиля.","statement-email-help");emailHelp.id="statementEmailHelp";
+ const emailSubmit=addText(emailForm,"button","Отправить выписку","statement-secondary");emailSubmit.type="submit";emailForm.appendChild(emailSubmit);
+ const emailStatus=addText(emailForm,"div","","statement-email-status");emailStatus.setAttribute("role","status");emailStatus.setAttribute("aria-live","polite");
+ emailForm.addEventListener("submit",async event=>{event.preventDefault();if(!customerSession){emailStatus.textContent="Сначала войдите в профиль.";return}emailSubmit.disabled=true;emailSubmit.textContent="Отправляем…";emailStatus.textContent="";
+  try{await api("statement-email","POST",{phone:customerSession.phone,code:customerSession.code,email:emailInput.value.trim()});emailStatus.textContent="Выписка отправлена на указанный email.";emailStatus.classList.add("is-success")}
+  catch(err){emailStatus.textContent=err.message||"Не удалось отправить выписку.";emailStatus.classList.remove("is-success")}
+  finally{emailSubmit.disabled=false;emailSubmit.textContent="Отправить выписку"}
+ });
+ statementActions.append(pdfAll,emailForm);root.appendChild(statementActions);
  const stats=document.createElement("div");stats.className="profile-stats";
  const counts=[
   ["Всего записей",entries.length],
