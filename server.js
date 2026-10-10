@@ -6,10 +6,10 @@ const commercialAttempts=new Map();
 const server=http.createServer(async(req,res)=>{
  try{
   const u=new URL(req.url,"http://localhost"),p=u.pathname;
-  if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"mmw-company",release:"Etalon 7.0",root:"public"}))}
+  if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"MMW-COMPANY"}))}
   if(p.startsWith("/api/commercial/")){
    const endpoint=p.slice("/api/commercial/".length).replace(/\/$/,"");
-   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","order-access","change-code","health"]);
+   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","order-access","change-code","statement-email","profile-email","health"]);
    if(!allowed.has(endpoint)){res.writeHead(404,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Not found"}));}
    const origin=req.headers.origin;
    if(origin&&origin!=="https://mmw-company.onrender.com"){res.writeHead(403,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Origin not allowed"}));}
@@ -17,7 +17,7 @@ const server=http.createServer(async(req,res)=>{
     if(req.method!=="GET"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
    }else if(req.method!=="POST"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
    const ip=(req.headers["x-forwarded-for"]||req.socket.remoteAddress||"unknown").toString().split(",")[0].trim();
-   const now=Date.now(),windowMs=10*60*1000,rateKey=ip+":"+endpoint,max=endpoint==="change-code"?6:endpoint==="order-access"?30:endpoint==="snapshot"||endpoint==="status"?12:20;
+   const now=Date.now(),windowMs=10*60*1000,rateKey=ip+":"+endpoint,max=endpoint==="statement-email"?4:endpoint==="profile-email"?3:endpoint==="change-code"?6:endpoint==="order-access"?30:endpoint==="snapshot"||endpoint==="status"?12:20;
    const recent=(commercialAttempts.get(rateKey)||[]).filter(t=>now-t<windowMs);
    if(recent.length>=max){res.writeHead(429,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Слишком много запросов к этому действию. Повторите позже."}));}
    recent.push(now);commercialAttempts.set(rateKey,recent);
@@ -47,4 +47,4 @@ const server=http.createServer(async(req,res)=>{
   res.writeHead(404,{"Content-Type":"text/plain; charset=utf-8"});return res.end("Not found");
  }catch(e){console.error(e);res.writeHead(500,{"Content-Type":"text/plain; charset=utf-8"});return res.end("Server error")}
 });
-server.listen(port,"0.0.0.0",()=>console.log("MMW-COMPANY Etalon 7.0 "+port));
+server.listen(port,"0.0.0.0",()=>console.log("MMW-COMPANY service listening on "+port));
