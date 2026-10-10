@@ -319,6 +319,80 @@
  #mmwSinglePrintReceipt .mmw-print-footer strong{color:#0b705b!important;font-size:9pt;line-height:1.1;letter-spacing:.16em;font-weight:800}
  #mmwSinglePrintReceipt .mmw-print-footer span{color:#52645b!important;font-size:8.5pt;line-height:1.45;letter-spacing:.005em}
 }
+
+/* Final visual pass — refined, legible, premium MMW document */
+@media print{
+ #mmwSinglePrintReceipt .mmw-print-masthead{
+  padding:16px 18px!important;margin-bottom:24px!important;
+  border:0!important;border-bottom:2px solid #0f9477!important;
+  border-radius:11px 11px 3px 3px!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-mark{border-radius:10px!important}
+ #mmwSinglePrintReceipt .mmw-print-title{
+  margin-bottom:17px!important;font-size:24pt!important;
+  letter-spacing:-.045em!important;line-height:1.08!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-number{
+  padding:15px 17px!important;margin-bottom:21px!important;
+  border:1px solid #e2ebe4!important;border-radius:10px!important;
+  background:#f6f9f6!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-number-value{font-size:17pt!important;letter-spacing:-.025em!important}
+ #mmwSinglePrintReceipt .mmw-print-section-title{
+  margin:20px 0 10px!important;font-size:8.5pt!important;
+  letter-spacing:.12em!important;color:#0b705b!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-client{gap:9px!important}
+ #mmwSinglePrintReceipt .mmw-print-cell{
+  padding:11px 13px!important;border:1px solid #e7ede8!important;
+  border-radius:8px!important;background:#fff!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-label{font-size:6.7pt!important;letter-spacing:.09em!important;color:#718078!important}
+ #mmwSinglePrintReceipt .mmw-print-field-value{font-size:9.5pt!important;line-height:1.45!important}
+ #mmwSinglePrintReceipt .mmw-print-status-row{
+  padding:10px 13px!important;margin-bottom:12px!important;
+  border:1px solid #e7ede8!important;border-radius:8px!important;
+  background:#f8faf8!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-status{
+  border:1px solid #d8e9de!important;border-radius:999px!important;
+  padding:5px 11px!important;background:#edf6f0!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-table{
+  overflow:hidden!important;border:1px solid #e2eae4!important;border-radius:9px!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-table-head{
+  padding:11px 12px!important;background:#edf5ef!important;
+  color:#416657!important;font-size:6.7pt!important;letter-spacing:.075em!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-table-row{
+  padding:12px!important;border-top:1px solid #edf1ed!important;
+  font-size:9pt!important;line-height:1.4!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-total{
+  margin-top:15px!important;padding:16px 18px!important;
+  border-radius:9px!important;background:#0a2821!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-total span{font-size:8pt!important;letter-spacing:.09em!important}
+ #mmwSinglePrintReceipt .mmw-print-total strong{font-size:20pt!important}
+ #mmwSinglePrintReceipt .mmw-print-notes,#mmwSinglePrintReceipt .mmw-print-message{
+  padding:12px 14px!important;border:1px solid #e7ede8!important;
+  border-radius:8px!important;background:#f8faf8!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-disclaimer{
+  padding:11px 13px!important;border-left-width:2px!important;
+  border-radius:0 7px 7px 0!important;background:#fbf8f0!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-footer{
+  gap:5px!important;margin-top:24px!important;padding-top:0!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-footer strong{
+  font-size:9pt!important;letter-spacing:.18em!important;color:#0b705b!important;
+ }
+ #mmwSinglePrintReceipt .mmw-print-footer span{
+  max-width:420px!important;font-size:8.5pt!important;color:#65746b!important;
+ }
+}
 </style>
 </head>
 <body>
