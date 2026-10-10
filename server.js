@@ -9,7 +9,7 @@ const server=http.createServer(async(req,res)=>{
   if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"mmw-company",release:"Etalon 7.0",root:"public"}))}
   if(p.startsWith("/api/commercial/")){
    const endpoint=p.slice("/api/commercial/".length).replace(/\/$/,"");
-   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","health"]);
+   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","order-access","health"]);
    if(!allowed.has(endpoint)){res.writeHead(404,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Not found"}));}
    const origin=req.headers.origin;
    if(origin&&origin!=="https://mmw-company.onrender.com"){res.writeHead(403,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Origin not allowed"}));}
@@ -17,7 +17,7 @@ const server=http.createServer(async(req,res)=>{
     if(req.method!=="GET"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
    }else if(req.method!=="POST"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
    const ip=(req.headers["x-forwarded-for"]||req.socket.remoteAddress||"unknown").toString().split(",")[0].trim();
-   const now=Date.now(),windowMs=10*60*1000,max=endpoint==="snapshot"||endpoint==="status"?8:30;
+   const now=Date.now(),windowMs=10*60*1000,max=endpoint==="snapshot"||endpoint==="status"||endpoint==="order-access"?8:30;
    const recent=(commercialAttempts.get(ip)||[]).filter(t=>now-t<windowMs);
    if(recent.length>=max){res.writeHead(429,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Слишком много запросов. Повторите позже."}));}
    recent.push(now);commercialAttempts.set(ip,recent);
