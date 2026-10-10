@@ -2,10 +2,41 @@ const http=require("node:http"),fs=require("node:fs"),path=require("node:path"),
 const root=__dirname,publicRoot=path.join(root,"public"),port=Number(process.env.PORT)||10000;
 const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".jpg":"image/jpeg",".jpeg":"image/jpeg",".png":"image/png",".webp":"image/webp",".json":"application/json; charset=utf-8",".ico":"image/x-icon",".txt":"text/plain; charset=utf-8",".xml":"application/xml; charset=utf-8"};
 const safe=(base,rel)=>{const b=path.resolve(base),p=path.resolve(base,rel);return p===b||p.startsWith(b+path.sep)?p:null};
-const server=http.createServer((req,res)=>{
+const commercialAttempts=new Map();
+const server=http.createServer(async(req,res)=>{
  try{
   const u=new URL(req.url,"http://localhost"),p=u.pathname;
   if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"mmw-company",release:"Etalon 7.0",root:"public"}))}
+  if(p.startsWith("/api/commercial/")){
+   const endpoint=p.slice("/api/commercial/".length).replace(/\/$/,"");
+   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","health"]);
+   if(!allowed.has(endpoint)){res.writeHead(404,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Not found"}));}
+   const origin=req.headers.origin;
+   if(origin&&origin!=="https://mmw-company.onrender.com"){res.writeHead(403,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Origin not allowed"}));}
+   if(endpoint==="catalog"||endpoint==="health"){
+    if(req.method!=="GET"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
+   }else if(req.method!=="POST"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Method not allowed"}));}
+   const ip=(req.headers["x-forwarded-for"]||req.socket.remoteAddress||"unknown").toString().split(",")[0].trim();
+   const now=Date.now(),windowMs=10*60*1000,max=endpoint==="snapshot"||endpoint==="status"?8:30;
+   const recent=(commercialAttempts.get(ip)||[]).filter(t=>now-t<windowMs);
+   if(recent.length>=max){res.writeHead(429,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Слишком много запросов. Повторите позже."}));}
+   recent.push(now);commercialAttempts.set(ip,recent);
+   const base=process.env.SUPABASE_FUNCTION_URL,anon=process.env.SUPABASE_ANON_KEY,publishable=process.env.SUPABASE_PUBLISHABLE_KEY;
+   if(!base||!anon||!publishable){res.writeHead(503,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Коммерческий сервис ещё не настроен."}));}
+   let body;
+   if(req.method==="POST"){
+    try{
+     let raw="";for await(const chunk of req){raw+=chunk;if(raw.length>100000){res.writeHead(413,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Request too large"}));}}
+     body=JSON.parse(raw||"{}");
+    }catch(e){res.writeHead(400,{"Content-Type":"application/json; charset=utf-8"});return res.end(JSON.stringify({error:"Некорректный JSON"}));}
+   }
+   try{
+    const upstream=await fetch(base.replace(/\/$/,"")+"/"+endpoint,{method:req.method,headers:{"apikey":publishable,"Authorization":"Bearer "+anon,"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)});
+    const payload=await upstream.text();
+    res.writeHead(upstream.status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
+    return res.end(payload);
+   }catch(e){console.error("Commercial API proxy failed:",e.message);res.writeHead(502,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Коммерческий сервис временно недоступен."}));}
+  }
   let rel=decodeURIComponent(p);if(rel==="/")rel="/index.html";
   const f=safe(publicRoot,rel.slice(1));
   if(f&&fs.existsSync(f)&&fs.statSync(f).isFile()){
