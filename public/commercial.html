@@ -426,17 +426,6 @@ function renderReceipt(data){
  for(const node of [search,kind,status,period,sort])node.addEventListener("input",renderEntries);
  reset.addEventListener("click",()=>{search.value="";kind.value="all";status.value="all";period.value="all";sort.value="newest";renderEntries()});
  renderEntries();
- const emailPanel=document.createElement("section");emailPanel.className="statement-email-panel no-print";
- const emailCopy=document.createElement("div");emailCopy.className="statement-email-copy";
- addText(emailCopy,"div","ДОКУМЕНТЫ И ИСТОРИЯ","eyebrow");addText(emailCopy,"h4","Получить выписку на email");addText(emailCopy,"p","Отправим краткую сводку по всем заявкам и обращениям профиля на адрес, который уже указан в истории. Для защиты данных потребуется повторная проверка доступа.");
- emailPanel.appendChild(emailCopy);
- const emailForm=document.createElement("form");emailForm.className="statement-email-form";
- const emailInput=document.createElement("input");emailInput.type="email";emailInput.required=true;emailInput.maxLength=254;emailInput.autocomplete="email";emailInput.placeholder="Ваш email";emailInput.setAttribute("aria-label","Email для отправки выписки");
- const knownEmail=(orders.find(o=>o.customerEmail||o.customer_email)?.customerEmail||orders.find(o=>o.customerEmail||o.customer_email)?.customer_email||inquiries.find(i=>i.email)?.email||"");emailInput.value=knownEmail;
- const emailButton=addText(emailForm,"button","Отправить выписку →");emailButton.type="submit";emailForm.append(emailInput,emailButton);
- const emailStatus=document.createElement("p");emailStatus.className="statement-email-status";emailStatus.setAttribute("role","status");emailStatus.setAttribute("aria-live","polite");
- emailForm.addEventListener("submit",async event=>{event.preventDefault();if(!customerSession){emailStatus.textContent="Сначала войдите в профиль.";emailStatus.className="statement-email-status err";return}emailButton.disabled=true;emailButton.textContent="Отправляем…";emailStatus.textContent="";try{await api("statement-email","POST",{phone:customerSession.phone,code:customerSession.code,email:emailInput.value.trim()});emailStatus.textContent="Выписка отправлена. Проверьте входящие письма и папку «Спам».";emailStatus.className="statement-email-status ok";emailButton.textContent="Отправлено ✓"}catch(error){emailStatus.textContent=error.message;emailStatus.className="statement-email-status err";emailButton.disabled=false;emailButton.textContent="Повторить отправку →"}});
- emailPanel.appendChild(emailForm);emailPanel.appendChild(emailStatus);root.appendChild(emailPanel);
  const foot=document.createElement("div");foot.className="receipt-footer";addText(foot,"strong","MMW-COMPANY");addText(foot,"span","Развитие проектов от возможности до результата");addText(foot,"small","Информационная выписка. Не является договором, счётом, платёжным документом или подтверждением оплаты.");root.appendChild(foot);
 }
 let customerSession=null, customerRefreshTimer=null, customerRefreshBusy=false;
