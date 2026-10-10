@@ -109,10 +109,10 @@ const images=[
 "ASSETS/MMW-COMPANY/catalog/20-energy-park.jpg",
 "ASSETS/MMW-COMPANY/catalog/01-project-audit.jpg",
 "ASSETS/MMW-COMPANY/catalog/03-business-project.jpg",
-"ASSETS/MMW-COMPANY/catalog/04-investment-project.jpg",
-"ASSETS/MMW-COMPANY/catalog/13-management.jpg",
-"ASSETS/MMW-COMPANY/catalog/05-business-system.jpg",
-"ASSETS/MMW-COMPANY/catalog/09-large-scale.jpg"
+"ASSETS/MMW-COMPANY/catalog/21-economic-model.svg",
+"ASSETS/MMW-COMPANY/catalog/22-implementation-roadmap.svg",
+"ASSETS/MMW-COMPANY/catalog/23-operations-model.svg",
+"ASSETS/MMW-COMPANY/catalog/24-integrated-review.svg"
 ];
 const fs=["Все",...new Set(items.map(x=>x[0]))],filters=document.getElementById("filters"),grid=document.getElementById("grid");
 fs.forEach((f,i)=>{const b=document.createElement("button");b.className="filter"+(i===0?" on":"");b.textContent=f;b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hide",f!=="Все"&&c.dataset.cat!==f))};filters.appendChild(b)});
