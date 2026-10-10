@@ -62,7 +62,7 @@ function renderCart(){
  for(const [sku,qty] of cart){
   const item=catalog.find(x=>x.sku===sku);if(!item)continue;
   const row=document.createElement("div");row.className="cartrow";const info=document.createElement("div");
-  addText(info,"strong",item.name);addText(info,"small",item.price===null?"Цена согласовывается":money(item.price)+" · демо");
+  addText(info,"strong",item.name);addText(info,"small",item.price===null?"Цена согласовывается":money(item.price)+" · ориентировочно");
   const controls=document.createElement("div");controls.className="qty";
   const minus=addText(controls,"button","−");minus.type="button";minus.setAttribute("aria-label","Уменьшить количество");minus.onclick=()=>{if(qty<=1)cart.delete(sku);else cart.set(sku,qty-1);renderCart()};
   addText(controls,"span",String(qty));const plus=addText(controls,"button","+");plus.type="button";plus.setAttribute("aria-label","Увеличить количество");plus.onclick=()=>{if(qty<100)cart.set(sku,qty+1);renderCart()};
@@ -116,7 +116,7 @@ function renderReceipt(o){
  const list=document.createElement("div");
  for(const item of (o.items||[])){const row=document.createElement("div");row.className="cartrow";addText(row,"div",(item.name||item.item_name||item.sku)+" × "+item.quantity);addText(row,"strong",money(item.line_total));list.appendChild(row)}
  root.appendChild(list);
- addText(root,"p","Предварительная сумма: "+money(o.subtotal)+" · цены демонстрационные, не являются офертой.","price");
+ addText(root,"p","Предварительная сумма: "+money(o.subtotal)+" · цены ориентировочные, не являются офертой.","price");
  if(o.notes)addText(root,"p","Комментарий: "+o.notes);
  addText(root,"p","Эта выписка подтверждает только наличие записи в системе. Она не является договором, счётом, платёжным документом или подтверждением оплаты.","muted");
 }
