@@ -23,19 +23,16 @@
 </main>
 <footer><div class="wrap footer"><span><b>MMW-COMPANY</b> · Развитие проектов от возможности до результата.</span><span><a href="./legal.html#privacy">Конфиденциальность</a> · <a href="./legal.html#terms">Условия использования</a> · <a href="./legal.html#offer">Коммерческие условия</a></span></div></footer>
 <script>
-const PROJECT_URL = "https://aqzvpbewyqcffanwmpus.supabase.co";
-const PUBLISHABLE_KEY = "sb_publishable_toJc0GhUBG_XcfZqYUM5nw_pyPB8ctE";
-const ANON_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxenZwYmV3eXFjZmZhbndtcHVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1MDIwMjYsImV4cCI6MjEwNzA3ODAyNn0.O33g7wsS1az_Kexn-DwZ51ebBf-VcnbmtDrCyyeQZHs";
-const API = PROJECT_URL + "/functions/v1/commercial-api";
+const API = "/api/commercial";
 const CONSENT_VERSION = "privacy-demo-v1-2026-10-10";
 const money = n => new Intl.NumberFormat("uk-UA",{style:"currency",currency:"UAH",maximumFractionDigits:0}).format(Number(n||0));
 const el = id => document.getElementById(id);
 let catalog = [], cart = new Map(), adminCode = "";
 function setStatus(id, message, ok=false){const node=el(id);node.textContent=message;node.className="status "+(ok?"ok":"err")}
 async function api(path, method="GET", body=null){
- const headers={"apikey":PUBLISHABLE_KEY,"Authorization":"Bearer "+ANON_JWT};
+ const headers={};
  if(body!==null)headers["Content-Type"]="application/json";
- const r=await fetch(API+"/"+path,{method,headers,body:body===null?undefined:JSON.stringify(body)});
+ const r=await fetch(API+"/"+path,{method,headers,body:body===null?undefined:JSON.stringify(body),credentials:"same-origin"});
  const data=await r.json().catch(()=>({error:"Сервис вернул некорректный ответ."}));
  if(!r.ok)throw new Error(data.error||"Запрос не выполнен.");
  return data;
