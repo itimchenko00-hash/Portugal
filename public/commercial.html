@@ -62,6 +62,33 @@
 #lookupForm button[type=submit]{background:linear-gradient(120deg,#071b17,#0b705b 72%,#0f9477)}
 @media(max-width:600px){#receiptBody>.receipt-monogram{margin:18px 16px 10px}#receiptBody>.receipt-title{margin-left:16px!important;margin-right:16px!important}#receiptBody>.muted{margin-left:16px;margin-right:16px} .profile-section-label{margin-left:16px;margin-right:16px}.profile-record{margin-left:12px;margin-right:12px;padding:14px}.profile-live-note{margin-left:12px;margin-right:12px}}
 
+
+/* Compact client cabinet with searchable history */
+.profile-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 18px 22px}
+.profile-stat{padding:13px 14px;border:1px solid #0b705b1d;border-radius:15px;background:#fff}
+.profile-stat span{display:block;color:#718178;font-size:10px;line-height:1.4;margin-bottom:7px}
+.profile-stat strong{display:block;color:#075543;font-size:24px;line-height:1;font-weight:800}
+.profile-filters{display:grid;grid-template-columns:minmax(180px,2fr) repeat(4,minmax(110px,1fr));gap:8px;margin:0 18px 12px}
+.profile-filters input,.profile-filters select{min-width:0;width:100%;padding:11px 12px;border:1px solid #d8e5dc;border-radius:11px;background:#fff;color:#173a2f;font:inherit;font-size:11px;outline-color:#0b705b}
+.profile-results-line{margin:0 18px 10px;color:#718178;font-size:10px}
+.profile-record-list{display:grid;gap:9px;margin:0 18px 12px}
+.profile-record-compact{margin:0;padding:0;overflow:hidden}
+.profile-record-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px;cursor:pointer;list-style:none}
+.profile-record-summary::-webkit-details-marker{display:none}
+.profile-record-summary:after{content:"+";font-size:20px;line-height:1;color:#0b705b;font-weight:400}
+.profile-record-compact[open]>.profile-record-summary:after{content:"−"}
+.profile-record-main{display:grid;gap:5px;min-width:0}
+.profile-record-main strong{font-size:13px;color:#071b17}
+.profile-record-main .meta{margin:0;font-size:10px}
+.profile-record-summary .profile-status{flex-shrink:0;margin:0}
+.profile-record-details{padding:0 16px 15px;border-top:1px solid #0b705b16}
+.profile-record-details p{margin:12px 0 0}
+.profile-empty{margin:0 18px 12px;padding:20px;border-radius:14px;background:#f4f8f5;color:#718178;text-align:center;font-size:12px}
+.profile-reset{margin:0 18px 14px;padding:8px 12px;border:1px solid #cbded1;border-radius:10px;background:transparent;color:#0b705b;font:inherit;font-size:11px;cursor:pointer}
+.profile-reset[hidden],.profile-empty[hidden]{display:none}
+@media(max-width:760px){.profile-stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-left:12px;margin-right:12px}.profile-filters{grid-template-columns:repeat(2,minmax(0,1fr));margin-left:12px;margin-right:12px}.profile-filters input{grid-column:1/-1}.profile-results-line{margin-left:12px;margin-right:12px}.profile-record-list{margin-left:12px;margin-right:12px}.profile-record-summary{padding:12px;gap:8px}.profile-record-summary .profile-status{font-size:9px;padding:5px 7px}}
+@media(max-width:390px){.profile-record-summary{flex-wrap:wrap}.profile-record-summary:after{margin-left:auto}.profile-record-summary .profile-status{order:3}}
+
 </style>
 </head>
 <body>
@@ -162,40 +189,84 @@ function renderReceipt(data){
  const card=el("receiptCard"),root=el("receiptBody");card.style.display="block";root.replaceChildren();
  const orders=Array.isArray(data.orders)?data.orders:(data.order?[data.order]:[]);
  const inquiries=Array.isArray(data.inquiries)?data.inquiries:[];
+ const phone=data.customer?.phone||orders[0]?.customerPhone||inquiries[0]?.phone||"—";
+ const statusLabels={new:"Получено",accepted:"Принято",in_progress:"В работе",completed:"Выполнено",cancelled:"Отменено",waiting:"Ожидает уточнения",qualified:"Квалифицировано",closed:"Закрыто",spam:"Закрыто"};
+ const entries=[];
+ for(const o of orders){
+  const date=o.createdAt||o.created_at||"";
+  const items=Array.isArray(o.items)?o.items:[];
+  const itemText=items.map(x=>(x.name||x.item_name||x.sku||"Позиция")+" × "+(x.quantity||1)+" — "+money(x.lineTotal??x.line_total)).join("\n");
+  entries.push({kind:"order",kindLabel:"Заявка",number:o.orderNumber||o.order_number||"—",status:o.status||"new",date:date,record:o,search:[o.orderNumber,o.order_number,o.customerName,o.customerPhone,o.customerEmail,o.organization,o.notes,itemText].join(" ")});
+ }
+ for(const i of inquiries){
+  entries.push({kind:"inquiry",kindLabel:"Обращение",number:i.inquiry_number||i.inquiryNumber||"—",status:i.status||"new",date:i.created_at||i.createdAt||"",record:i,search:[i.inquiry_number,i.inquiryNumber,i.name,i.phone,i.email,i.project_slug,i.inquiry_type,i.message].join(" ")});
+ }
+ entries.sort((x,y)=>new Date(y.date||0)-new Date(x.date||0));
  addText(root,"div","MMW-COMPANY","receipt-monogram");
- addText(root,"h3","Моя история обращений и заказов","receipt-title");
- addText(root,"p","Телефон: "+(data.customer?.phone||orders[0]?.customerPhone||"—")+" · Заявок-заказов: "+orders.length+" · Обращений: "+inquiries.length,"muted");
- if(!orders.length&&!inquiries.length){addText(root,"p","По этому профилю пока нет связанных записей.");return}
- if(orders.length){
-  addText(root,"h4","Заявки и заказы","profile-section-label");
-  for(const o of orders){
-   const box=document.createElement("section");box.className="profile-record";
-   addText(box,"h3","Заявка №"+o.orderNumber);
-   showProfileStatus(box,o.status||"new");
-   addText(box,"div",new Date(o.createdAt).toLocaleString("uk-UA"),"meta");
-   addText(box,"p","Имя: "+(o.customerName||"—")+"\nТелефон: "+(o.customerPhone||"—")+"\nEmail: "+(o.customerEmail||"—")+"\nКомпания: "+(o.organization||"—"));
-   if(Array.isArray(o.items)&&o.items.length){
-    addText(box,"strong","Состав");
-    for(const item of o.items)addText(box,"p",(item.name||item.item_name||item.sku)+" × "+item.quantity+" — "+money(item.lineTotal??item.line_total));
+ addText(root,"h3","Мой кабинет","receipt-title");
+ addText(root,"p","Клиентский профиль · "+phone,"muted");
+ const stats=document.createElement("div");stats.className="profile-stats";
+ const counts=[
+  ["Всего записей",entries.length],
+  ["Новые",entries.filter(x=>x.status==="new").length],
+  ["В работе",entries.filter(x=>["in_progress","accepted","waiting","qualified"].includes(x.status)).length],
+  ["Завершены",entries.filter(x=>["completed","closed","cancelled","spam"].includes(x.status)).length]
+ ];
+ for(const [label,value] of counts){const tile=document.createElement("div");tile.className="profile-stat";addText(tile,"span",label);addText(tile,"strong",String(value));stats.appendChild(tile)}
+ root.appendChild(stats);
+ addText(root,"h4","История заявок и обращений","profile-section-label");
+ const controls=document.createElement("div");controls.className="profile-filters";
+ const search=document.createElement("input");search.type="search";search.placeholder="Поиск по номеру, услуге или тексту";search.setAttribute("aria-label","Поиск по истории");
+ const kind=document.createElement("select");kind.setAttribute("aria-label","Тип записи");
+ for(const [value,label] of [["all","Все записи"],["order","Заявки и заказы"],["inquiry","Обращения"]]){const op=document.createElement("option");op.value=value;op.textContent=label;kind.appendChild(op)}
+ const status=document.createElement("select");status.setAttribute("aria-label","Статус");
+ for(const [value,label] of [["all","Все статусы"],["new","Получено"],["accepted","Принято"],["in_progress","В работе"],["waiting","Ожидает уточнения"],["qualified","Квалифицировано"],["completed","Выполнено"],["closed","Закрыто"],["cancelled","Отменено"],["spam","Закрыто"]]){const op=document.createElement("option");op.value=value;op.textContent=label;status.appendChild(op)}
+ const period=document.createElement("select");period.setAttribute("aria-label","Период");
+ for(const [value,label] of [["all","За всё время"],["30","30 дней"],["90","90 дней"],["365","12 месяцев"]]){const op=document.createElement("option");op.value=value;op.textContent=label;period.appendChild(op)}
+ const sort=document.createElement("select");sort.setAttribute("aria-label","Сортировка");
+ for(const [value,label] of [["newest","Сначала новые"],["oldest","Сначала старые"]]){const op=document.createElement("option");op.value=value;op.textContent=label;sort.appendChild(op)}
+ for(const node of [search,kind,status,period,sort])controls.appendChild(node);
+ root.appendChild(controls);
+ const resultLine=document.createElement("div");resultLine.className="profile-results-line";root.appendChild(resultLine);
+ const list=document.createElement("div");list.className="profile-record-list";root.appendChild(list);
+ const empty=addText(root,"p","Ничего не найдено. Измените фильтры или сбросьте поиск.","profile-empty");empty.hidden=true;
+ const reset=addText(root,"button","Сбросить фильтры","profile-reset");reset.type="button";
+ const renderEntries=()=>{
+  list.replaceChildren();
+  const query=search.value.trim().toLocaleLowerCase("ru");
+  const cutoff=period.value==="all"?0:Date.now()-Number(period.value)*86400000;
+  let visible=entries.filter(e=>(kind.value==="all"||e.kind===kind.value)&&(status.value==="all"||e.status===status.value)&&(!cutoff||!e.date||new Date(e.date).getTime()>=cutoff)&&(!query||(e.search+" "+e.number+" "+e.status).toLocaleLowerCase("ru").includes(query)));
+  if(sort.value==="oldest")visible.reverse();
+  resultLine.textContent="Показано "+visible.length+" из "+entries.length;
+  empty.hidden=visible.length!==0;
+  reset.hidden=!(query||kind.value!=="all"||status.value!=="all"||period.value!=="all"||sort.value!=="newest");
+  for(const entry of visible){
+   const r=entry.record,details=document.createElement("details");details.className="profile-record profile-record-compact";
+   const summary=document.createElement("summary");summary.className="profile-record-summary";
+   const main=document.createElement("div");main.className="profile-record-main";
+   addText(main,"strong",entry.kindLabel+" №"+entry.number);
+   addText(main,"span",entry.date?new Date(entry.date).toLocaleString("uk-UA"):"Дата не указана","meta");
+   summary.appendChild(main);
+   const badge=addText(summary,"span",statusLabels[entry.status]||entry.status||"Получено","profile-status");badge.dataset.status=entry.status;
+   details.appendChild(summary);
+   const body=document.createElement("div");body.className="profile-record-details";
+   if(entry.kind==="order"){
+    addText(body,"p","Имя: "+(r.customerName||r.customer_name||"—")+"\nТелефон: "+(r.customerPhone||r.customer_phone||"—")+"\nEmail: "+(r.customerEmail||r.customer_email||"—")+"\nКомпания: "+(r.organization||"—"));
+    const items=Array.isArray(r.items)?r.items:[];
+    if(items.length){addText(body,"strong","Состав");for(const item of items)addText(body,"p",(item.name||item.item_name||item.sku||"Позиция")+" × "+(item.quantity||1)+" — "+money(item.lineTotal??item.line_total))}
+    addText(body,"p","Предварительная сумма: "+money(r.subtotal??r.total)+" · "+(r.currency||"UAH"));
+    if(r.notes)addText(body,"p","Комментарий: "+r.notes);
+    addText(body,"p","Цены ориентировочные. Запись не является договором, счётом или подтверждением оплаты.","receipt-disclaimer");
+   }else{
+    addText(body,"p","Имя: "+(r.name||"—")+"\nТелефон: "+(r.phone||"—")+"\nEmail: "+(r.email||"—")+"\nПроект: "+(r.project_slug||"—")+"\nТип: "+(r.inquiry_type||"—"));
+    if(r.message)addText(body,"p",r.message);
    }
-   addText(box,"p","Предварительная сумма: "+money(o.subtotal)+" · "+(o.currency||"UAH"));
-   if(o.notes)addText(box,"p","Комментарий: "+o.notes);
-   addText(box,"p","Цены ориентировочные. Запись не является договором, счётом или подтверждением оплаты.","receipt-disclaimer");
-   root.appendChild(box);
+   details.appendChild(body);list.appendChild(details);
   }
- }
- if(inquiries.length){
-  addText(root,"h4","Обращения","profile-section-label");
-  for(const i of inquiries){
-   const box=document.createElement("section");box.className="profile-record";
-   addText(box,"h3","Обращение №"+i.inquiry_number);
-   showProfileStatus(box,i.status||"new");
-   addText(box,"div",new Date(i.created_at).toLocaleString("uk-UA"),"meta");
-   addText(box,"p","Имя: "+(i.name||"—")+"\nТелефон: "+(i.phone||"—")+"\nEmail: "+(i.email||"—")+"\nПроект: "+(i.project_slug||"—")+"\nТип: "+(i.inquiry_type||"—"));
-   addText(box,"p",i.message||"");
-   root.appendChild(box);
-  }
- }
+ };
+ for(const node of [search,kind,status,period,sort])node.addEventListener("input",renderEntries);
+ reset.addEventListener("click",()=>{search.value="";kind.value="all";status.value="all";period.value="all";sort.value="newest";renderEntries()});
+ renderEntries();
  const foot=document.createElement("div");foot.className="receipt-footer";addText(foot,"strong","MMW-COMPANY");addText(foot,"span","Развитие проектов от возможности до результата");addText(foot,"small","Информационная выписка. Не является договором, счётом, платёжным документом или подтверждением оплаты.");root.appendChild(foot);
 }
 let customerSession=null, customerRefreshTimer=null, customerRefreshBusy=false;
