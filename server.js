@@ -9,7 +9,7 @@ const server=http.createServer(async(req,res)=>{
   if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"mmw-company",release:"Etalon 7.0",root:"public"}))}
   if(p.startsWith("/api/commercial/")){
    const endpoint=p.slice("/api/commercial/".length).replace(/\/$/,"");
-   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","order-access","health"]);
+   const allowed=new Set(["catalog","orders","inquiries","snapshot","status","order-access","change-code","health"]);
    if(!allowed.has(endpoint)){res.writeHead(404,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Not found"}));}
    const origin=req.headers.origin;
    if(origin&&origin!=="https://mmw-company.onrender.com"){res.writeHead(403,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Origin not allowed"}));}
