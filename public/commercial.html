@@ -313,7 +313,7 @@ function renderReceipt(data){
  addText(root,"p","Клиентский профиль · "+phone,"muted");
  const statementActions=document.createElement("div");statementActions.className="statement-actions no-print";
  const pdfAll=addText(statementActions,"button","Сохранить выписку в PDF","statement-primary");pdfAll.type="button";
- pdfAll.addEventListener("click",()=>{document.body.classList.add("printing");const cleanup=()=>document.body.classList.remove("printing");window.addEventListener("afterprint",cleanup,{once:true});window.print();setTimeout(cleanup,120000)});
+ pdfAll.addEventListener("click",()=>{const records=[...root.querySelectorAll(".profile-record")],previous=records.map(node=>node.open);records.forEach(node=>node.open=true);document.body.classList.add("printing");let cleaned=false;const cleanup=()=>{if(cleaned)return;cleaned=true;document.body.classList.remove("printing");records.forEach((node,index)=>node.open=previous[index])};window.addEventListener("afterprint",cleanup,{once:true});window.print();setTimeout(cleanup,120000)});
  const emailForm=document.createElement("form");emailForm.className="statement-email-form";
  const emailLabel=addText(emailForm,"label","Отправить выписку на email");emailLabel.htmlFor="statementEmailAddress";
  const emailInput=document.createElement("input");emailInput.id="statementEmailAddress";emailInput.type="email";emailInput.required=true;emailInput.maxLength=254;emailInput.autocomplete="email";emailInput.placeholder="Email, указанный в заявке";
