@@ -89,6 +89,24 @@
 @media(max-width:760px){.profile-stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-left:12px;margin-right:12px}.profile-filters{grid-template-columns:repeat(2,minmax(0,1fr));margin-left:12px;margin-right:12px}.profile-filters input{grid-column:1/-1}.profile-results-line{margin-left:12px;margin-right:12px}.profile-record-list{margin-left:12px;margin-right:12px}.profile-record-summary{padding:12px;gap:8px}.profile-record-summary .profile-status{font-size:9px;padding:5px 7px}}
 @media(max-width:390px){.profile-record-summary{flex-wrap:wrap}.profile-record-summary:after{margin-left:auto}.profile-record-summary .profile-status{order:3}}
 
+
+/* Individual customer-record PDF/print */
+.profile-pdf-button{display:inline-flex;align-items:center;justify-content:center;margin-top:14px;padding:10px 14px;border:0;border-radius:999px;background:linear-gradient(120deg,#071b17,#0b705b 72%,#0f9477);color:#fff;font-size:11px;font-weight:800;cursor:pointer}
+@media print{
+ body.printing-single #receiptBody>.profile-stats,
+ body.printing-single #receiptBody>.profile-filters,
+ body.printing-single #receiptBody>.profile-results-line,
+ body.printing-single #receiptBody>.profile-empty,
+ body.printing-single #receiptBody>.profile-reset,
+ body.printing-single #securityPanel{display:none!important}
+ body.printing-single #receiptBody>.profile-record-list>.profile-record:not([data-print-selected="true"]){display:none!important}
+ body.printing-single #receiptBody>.profile-record-list{display:block!important;margin:12px 0!important}
+ body.printing-single .profile-record[data-print-selected="true"]{display:block!important;break-inside:avoid;border:1px solid #d5e1d9!important;border-radius:10px!important;box-shadow:none!important}
+ body.printing-single .profile-record-summary{display:flex!important;cursor:default!important}
+ body.printing-single .profile-record-summary:after{display:none!important}
+ body.printing-single .profile-record-details{display:block!important}
+ body.printing-single .profile-pdf-button{display:none!important}
+}
 </style>
 </head>
 <body>
@@ -275,6 +293,18 @@ function renderReceipt(data){
     addText(body,"p","Имя: "+(r.name||"—")+"\nТелефон: "+(r.phone||"—")+"\nEmail: "+(r.email||"—")+"\nПроект: "+(r.project_slug||"—")+"\nТип: "+(r.inquiry_type||"—"));
     if(r.message)addText(body,"p",r.message);
    }
+   const pdfButton=addText(body,"button","Скачать PDF этой записи","profile-pdf-button");
+   pdfButton.type="button";
+   pdfButton.addEventListener("click",event=>{
+    event.preventDefault();event.stopPropagation();
+    list.querySelectorAll('[data-print-selected="true"]').forEach(node=>node.removeAttribute("data-print-selected"));
+    details.setAttribute("data-print-selected","true");details.open=true;
+    document.body.classList.add("printing","printing-single");
+    const cleanup=()=>{document.body.classList.remove("printing","printing-single");details.removeAttribute("data-print-selected")};
+    window.addEventListener("afterprint",cleanup,{once:true});
+    window.print();
+    setTimeout(()=>{if(document.body.classList.contains("printing-single"))cleanup()},120000);
+   });
    details.appendChild(body);list.appendChild(details);
   }
  };
