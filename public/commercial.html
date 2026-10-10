@@ -41,6 +41,27 @@
 @media(max-width:600px){.receipt-masthead{padding:18px 16px}.receipt-kicker,#receiptBody>.tag{margin-left:16px;margin-right:16px}.receipt-title{margin-left:16px!important;margin-right:16px!important;font-size:25px!important}.receipt-meta,.receipt-client,.receipt-table{margin-left:16px;margin-right:16px}.receipt-section-title{margin-left:16px;margin-right:16px}.receipt-total,.receipt-disclaimer{margin-left:16px;margin-right:16px}.receipt-footer{padding:16px}.receipt-table-head,.receipt-table-row{grid-template-columns:minmax(0,1fr) 40px 82px;padding:9px 8px;gap:6px}}
 @page{size:A4;margin:12mm}
 @media print{body.printing{background:#fff!important;color:#071b17!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}body.printing #lookupSection{padding:0!important}body.printing #lookupSection .wrap{width:100%!important;max-width:none!important}body.printing #receiptCard{display:block!important;position:static!important;width:100%!important;max-width:none!important;padding:0!important;border:1px solid #d5e1d9!important;border-radius:0!important;overflow:visible!important}body.printing #receiptBody{font-family:Arial,Helvetica,sans-serif!important}body.printing .receipt-masthead{background:#071b17!important;color:#fff!important}body.printing .receipt-masthead *{color:inherit!important}body.printing .receipt-monogram{background:#bdebd9!important;color:#071b17!important}body.printing .receipt-meta,body.printing .receipt-table-head{background:#e6f2ec!important}body.printing .receipt-total{background:#071b17!important;color:#fff!important;break-inside:avoid}body.printing .receipt-disclaimer{background:#fff8e9!important;color:#574a2d!important;break-inside:avoid}body.printing .receipt-client-cell,body.printing .receipt-table-row,.receipt-section-title{break-inside:avoid}body.printing .receipt-footer{background:#f2f5ef!important;break-inside:avoid}body.printing .receipt-footer *{color:#43564e!important}body.printing .receipt-footer strong{color:#0b705b!important}body.printing #receiptBody *{box-shadow:none!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-masthead,body.printing #lookupSection #receiptCard #receiptBody .receipt-total{background:#071b17!important;color:#fff!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-masthead *{color:#fff!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-brand small,body.printing #lookupSection #receiptCard #receiptBody .receipt-doc-type,body.printing #lookupSection #receiptCard #receiptBody .receipt-total span{color:#bdebd9!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-monogram{background:#bdebd9!important;color:#071b17!important}body.printing #lookupSection #receiptCard #receiptBody .receipt-total strong{color:#fff!important}body.printing #printReceipt,body.printing .no-print{display:none!important}}
+
+/* Customer profile — MMW-COMPANY account styling */
+#receiptCard{border:1px solid #0b705b2b!important;border-radius:24px!important;background:linear-gradient(145deg,#fff 0%,#fbfdfb 72%,#edf7f1 100%);box-shadow:0 18px 42px #071b170b}
+#receiptBody{padding:0 0 4px}
+#receiptBody>.receipt-monogram{width:46px;height:46px;margin:22px 22px 12px;border-radius:14px;background:linear-gradient(135deg,#bdebd9,#e4f6ec);color:#075543;font-size:14px;box-shadow:0 5px 14px #0b705b16}
+#receiptBody>.receipt-title{margin:0 22px 8px!important;font-size:clamp(24px,3vw,32px)!important;line-height:1.05}
+#receiptBody>.muted{margin:0 22px 20px;padding-bottom:18px;border-bottom:1px solid #0b705b1c;overflow-wrap:anywhere}
+.profile-section-label{margin:22px 22px 10px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#0b705b;font-weight:900}
+.profile-record{margin:0 18px 12px;padding:17px 17px 15px;border:1px solid #0b705b22;border-radius:17px;background:#fff;box-shadow:0 5px 18px #071b1707}
+.profile-record h3{font-size:17px!important;line-height:1.25;letter-spacing:-.035em!important;margin:0 0 7px!important;color:#071b17}
+.profile-record .meta{font-size:10px;color:#718178;margin:0 0 12px}
+.profile-record p{font-size:11px;line-height:1.7;color:#52665b;overflow-wrap:anywhere;white-space:pre-wrap}
+.profile-status{display:inline-flex;align-items:center;gap:6px;margin:0 0 8px;padding:6px 10px;border-radius:999px;background:#e6f4ec;color:#0b705b;font-size:10px;font-weight:900}
+.profile-status:before{content:"";width:6px;height:6px;border-radius:50%;background:#0f9477}
+.profile-record .receipt-disclaimer{margin:12px 0 0;border-radius:9px}
+.profile-record .profile-status[data-status="cancelled"],.profile-record .profile-status[data-status="spam"],.profile-record .profile-status[data-status="closed"]{background:#f2eeee;color:#78524f}
+.profile-record .profile-status[data-status="in_progress"],.profile-record .profile-status[data-status="waiting"]{background:#fff4dc;color:#805b18}
+.profile-live-note{margin:0 18px 16px;padding:10px 13px;border-radius:12px;background:#f0f7f2;color:#4b6859;font-size:10px;line-height:1.55}
+#lookupForm button[type=submit]{background:linear-gradient(120deg,#071b17,#0b705b 72%,#0f9477)}
+@media(max-width:600px){#receiptBody>.receipt-monogram{margin:18px 16px 10px}#receiptBody>.receipt-title{margin-left:16px!important;margin-right:16px!important}#receiptBody>.muted{margin-left:16px;margin-right:16px} .profile-section-label{margin-left:16px;margin-right:16px}.profile-record{margin-left:12px;margin-right:12px;padding:14px}.profile-live-note{margin-left:12px;margin-right:12px}}
+
 </style>
 </head>
 <body>
@@ -146,10 +167,11 @@ function renderReceipt(data){
  addText(root,"p","Телефон: "+(data.customer?.phone||orders[0]?.customerPhone||"—")+" · Заявок-заказов: "+orders.length+" · Обращений: "+inquiries.length,"muted");
  if(!orders.length&&!inquiries.length){addText(root,"p","По этому профилю пока нет связанных записей.");return}
  if(orders.length){
-  addText(root,"h4","Заявки и заказы","receipt-section-title");
+  addText(root,"h4","Заявки и заказы","profile-section-label");
   for(const o of orders){
-   const box=document.createElement("section");box.className="record";
-   addText(box,"h3","Заявка №"+o.orderNumber+" · "+(o.status||"new"));
+   const box=document.createElement("section");box.className="profile-record";
+   addText(box,"h3","Заявка №"+o.orderNumber);
+   showProfileStatus(box,o.status||"new");
    addText(box,"div",new Date(o.createdAt).toLocaleString("uk-UA"),"meta");
    addText(box,"p","Имя: "+(o.customerName||"—")+"\nТелефон: "+(o.customerPhone||"—")+"\nEmail: "+(o.customerEmail||"—")+"\nКомпания: "+(o.organization||"—"));
    if(Array.isArray(o.items)&&o.items.length){
@@ -163,10 +185,11 @@ function renderReceipt(data){
   }
  }
  if(inquiries.length){
-  addText(root,"h4","Обращения","receipt-section-title");
+  addText(root,"h4","Обращения","profile-section-label");
   for(const i of inquiries){
-   const box=document.createElement("section");box.className="record";
-   addText(box,"h3","Обращение №"+i.inquiry_number+" · "+(i.status||"new"));
+   const box=document.createElement("section");box.className="profile-record";
+   addText(box,"h3","Обращение №"+i.inquiry_number);
+   showProfileStatus(box,i.status||"new");
    addText(box,"div",new Date(i.created_at).toLocaleString("uk-UA"),"meta");
    addText(box,"p","Имя: "+(i.name||"—")+"\nТелефон: "+(i.phone||"—")+"\nEmail: "+(i.email||"—")+"\nПроект: "+(i.project_slug||"—")+"\nТип: "+(i.inquiry_type||"—"));
    addText(box,"p",i.message||"");
@@ -175,12 +198,35 @@ function renderReceipt(data){
  }
  const foot=document.createElement("div");foot.className="receipt-footer";addText(foot,"strong","MMW-COMPANY");addText(foot,"span","Развитие проектов от возможности до результата");addText(foot,"small","Информационная выписка. Не является договором, счётом, платёжным документом или подтверждением оплаты.");root.appendChild(foot);
 }
+let customerSession=null, customerRefreshTimer=null, customerRefreshBusy=false;
+const statusLabels={new:"Получено",accepted:"Принята",in_progress:"В работе",completed:"Выполнена",cancelled:"Отменена",waiting:"Ожидает уточнения",qualified:"Квалифицировано",closed:"Закрыто",spam:"Закрыто"};
+function showProfileStatus(parent,status){const node=addText(parent,"div",statusLabels[status]||status||"Получено","profile-status");node.dataset.status=status||"new";return node}
+async function refreshCustomerHistory(silent=true){
+ if(!customerSession||customerRefreshBusy)return;
+ customerRefreshBusy=true;
+ try{
+  const d=await api("order-access","POST",{phone:customerSession.phone,code:customerSession.code});
+  renderReceipt(d);
+  if(!silent)setStatus("lookupStatus","История обновлена. Статусы актуальны на "+new Date().toLocaleTimeString("uk-UA")+".",true);
+ }catch(err){
+  if(!silent)setStatus("lookupStatus","Не удалось обновить историю: "+err.message);
+ }finally{customerRefreshBusy=false}
+}
+function startCustomerRefresh(){
+ if(customerRefreshTimer)clearInterval(customerRefreshTimer);
+ customerRefreshTimer=setInterval(()=>{if(document.visibilityState==="visible")refreshCustomerHistory(true)},12000);
+}
 el("lookupForm").addEventListener("submit",async e=>{
  e.preventDefault();const f=new FormData(e.currentTarget);const b=e.currentTarget.querySelector('button[type="submit"]');b.disabled=true;
- try{const d=await api("order-access","POST",{phone:f.get("phone"),code:f.get("code")});renderReceipt(d);setStatus("lookupStatus","История загружена. Найденные заявки, заказы и обращения доступны ниже.",true)}
- catch(err){el("receiptCard").style.display="none";el("receiptBody").replaceChildren();setStatus("lookupStatus",err.message)}
+ const phone=String(f.get("phone")||"").trim(),code=String(f.get("code")||"").trim();
+ try{
+  const d=await api("order-access","POST",{phone,code});
+  customerSession={phone,code};renderReceipt(d);startCustomerRefresh();
+  setStatus("lookupStatus","История загружена. Статусы автоматически обновляются, пока страница открыта.",true);
+ }catch(err){customerSession=null;if(customerRefreshTimer)clearInterval(customerRefreshTimer);el("receiptCard").style.display="none";el("receiptBody").replaceChildren();setStatus("lookupStatus",err.message)}
  finally{b.disabled=false}
 });
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&customerSession)refreshCustomerHistory(true)});
 el("printReceipt").addEventListener("click",()=>{document.body.classList.add("printing");window.print();window.addEventListener("afterprint",()=>document.body.classList.remove("printing"),{once:true})});
 el("adminForm").addEventListener("submit",async e=>{
  e.preventDefault();adminCode=el("adminCode").value;const b=e.currentTarget.querySelector('button[type="submit"]');b.disabled=true;
