@@ -3,6 +3,28 @@ const root=__dirname,publicRoot=path.join(root,"public"),port=Number(process.env
 const mime={".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".css":"text/css; charset=utf-8",".svg":"image/svg+xml",".jpg":"image/jpeg",".jpeg":"image/jpeg",".png":"image/png",".webp":"image/webp",".json":"application/json; charset=utf-8",".ico":"image/x-icon",".txt":"text/plain; charset=utf-8",".xml":"application/xml; charset=utf-8"};
 const safe=(base,rel)=>{const b=path.resolve(base),p=path.resolve(base,rel);return p===b||p.startsWith(b+path.sep)?p:null};
 const commercialAttempts=new Map();
+const telegramReady=()=>Boolean(process.env.TELEGRAM_BOT_TOKEN&&process.env.TELEGRAM_CHAT_ID);
+async function notifyCommercialTelegram(endpoint,requestBody,responsePayload){
+ if(!telegramReady()){console.warn("MMW-COMPANY Telegram notification skipped: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not configured");return false;}
+ const clip=(v,n=700)=>String(v??"").trim().slice(0,n)||"—";
+ const lines=[];
+ if(endpoint==="orders"){
+  const o=responsePayload?.order||{};
+  lines.push("НОВАЯ ЗАЯВКА MMW-COMPANY", "Номер: "+clip(o.orderNumber), "Статус: "+clip(o.status||"new"), "", "КЛИЕНТ", "Имя: "+clip(requestBody.customerName), "Телефон: "+clip(requestBody.customerPhone), "Email: "+clip(requestBody.customerEmail), "Компания: "+clip(requestBody.organization), "", "СОСТАВ ЗАЯВКИ", ...(Array.isArray(requestBody.items)?requestBody.items.slice(0,40).map(i=>"• "+clip(i.sku,120)+" × "+Math.max(1,Math.min(100,Number(i.quantity)||1))):["—"]), "", "Предварительная сумма: "+clip(o.subtotal)+" "+clip(o.currency||"UAH"), "Код доступа: "+clip(o.accessCode||"используется существующий код"), "Комментарий: "+clip(requestBody.notes,1000), "", "Журнал: https://mmw-company.onrender.com/commercial.html#admin");
+ }else if(endpoint==="inquiries"){
+  const q=responsePayload?.inquiry||responsePayload||{};
+  lines.push("НОВОЕ ОБРАЩЕНИЕ MMW-COMPANY","Номер: "+clip(q.inquiryNumber),"Имя: "+clip(requestBody.name),"Телефон: "+clip(requestBody.phone),"Email: "+clip(requestBody.email),"Организация: "+clip(requestBody.organization),"Проект: "+clip(requestBody.projectSlug),"Тип: "+clip(requestBody.inquiryType),"Сообщение: "+clip(requestBody.message,1800),"","Журнал: https://mmw-company.onrender.com/commercial.html#admin");
+ }else return false;
+ const text=lines.join("\n").slice(0,3900);
+ try{
+  const response=await fetch("https://api.telegram.org/bot"+process.env.TELEGRAM_BOT_TOKEN+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:process.env.TELEGRAM_CHAT_ID,text,disable_web_page_preview:true})});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||result.ok!==true){console.error("MMW-COMPANY Telegram notification failed:",result.description||("HTTP "+response.status));return false;}
+  console.log("MMW-COMPANY Telegram notification accepted:",endpoint,"message_id="+String(result.result?.message_id||"unknown"));
+  return true;
+ }catch(e){console.error("MMW-COMPANY Telegram notification error:",e.message);return false;}
+}
+
 const server=http.createServer(async(req,res)=>{
  try{
   const u=new URL(req.url,"http://localhost"),p=u.pathname;
@@ -33,6 +55,10 @@ const server=http.createServer(async(req,res)=>{
    try{
     const upstream=await fetch(base.replace(/\/$/,"")+"/"+endpoint,{method:req.method,headers:{"apikey":publishable,"Authorization":"Bearer "+anon,"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)});
     const payload=await upstream.text();
+    if(upstream.status===201&&(endpoint==="orders"||endpoint==="inquiries")){
+     try{await notifyCommercialTelegram(endpoint,body,JSON.parse(payload));}
+     catch(e){console.error("MMW-COMPANY notification processing error:",e.message);}
+    }
     res.writeHead(upstream.status,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});
     return res.end(payload);
    }catch(e){console.error("Commercial API proxy failed:",e.message);res.writeHead(502,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({error:"Коммерческий сервис временно недоступен."}));}
