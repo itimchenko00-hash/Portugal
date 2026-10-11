@@ -28,6 +28,12 @@ async function notifyCommercialTelegram(endpoint,requestBody,responsePayload){
 const server=http.createServer(async(req,res)=>{
  try{
   const u=new URL(req.url,"http://localhost"),p=u.pathname;
+  if(p==="/api/telegram-link"){
+   if(req.method!=="GET"){res.writeHead(405,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:false}));}
+   const token=process.env.TELEGRAM_BOT_TOKEN;
+   if(!token){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:false}));}
+   try{const r=await fetch("https://api.telegram.org/bot"+token+"/getMe");const d=await r.json();const username=d?.ok&&d?.result?.username?String(d.result.username):"";res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify(username?{ok:true,url:"https://t.me/"+username}:{ok:false}));}catch(e){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:false}));}
+  }
   if(p==="/healthz"){res.writeHead(200,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});return res.end(JSON.stringify({ok:true,service:"MMW-COMPANY"}))}
   if(p.startsWith("/api/commercial/")){
    const endpoint=p.slice("/api/commercial/".length).replace(/\/$/,"");
