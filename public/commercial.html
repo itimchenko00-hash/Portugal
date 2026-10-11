@@ -393,6 +393,11 @@
   max-width:420px!important;font-size:8.5pt!important;color:#65746b!important;
  }
 }
+
+/* Official MMW mark across customer statements and print views */
+.mmw-print-mark{display:block!important;object-fit:cover!important;width:38px!important;height:38px!important;padding:0!important;background:transparent!important;border-radius:9px!important;flex:0 0 38px!important}
+.receipt-monogram{display:block!important;object-fit:cover!important;padding:0!important;background:transparent!important;color:transparent!important;flex:0 0 42px!important}
+@media print{.mmw-print-mark,.receipt-monogram{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}}
 </style>
 </head>
 <body>
@@ -551,8 +556,8 @@ function printSingleRecord(entry, statusLabels){
  const root=document.createElement("article");root.id="mmwSinglePrintReceipt";
  const mast=document.createElement("header");mast.className="mmw-print-masthead";
  const brand=document.createElement("div");brand.className="mmw-print-brand";
- addText(brand,"span","MMW","mmw-print-mark");
- const brandText=document.createElement("div");addText(brandText,"strong","MMW");addText(brandText,"small","PROJECT DEVELOPMENT & MANAGEMENT");brand.appendChild(brandText);
+ const brandMark=document.createElement("img");brandMark.src="./favicon.svg";brandMark.alt="MMW";brandMark.className="mmw-print-mark";brand.appendChild(brandMark);
+ const brandText=document.createElement("div");addText(brandText,"strong","MMW-COMPANY");addText(brandText,"small","РАЗВИТИЕ ПРОЕКТОВ ОТ ВОЗМОЖНОСТИ ДО РЕЗУЛЬТАТА");brand.appendChild(brandText);
  mast.appendChild(brand);addText(mast,"span","ВЫПИСКА ПО ЗАЯВКЕ","mmw-print-doc-label");root.appendChild(mast);
  addText(root,"h1","ВЫПИСКА ПО ЗАЯВКЕ","mmw-print-title");
  const numberBox=document.createElement("section");numberBox.className="mmw-print-number";
@@ -620,7 +625,7 @@ function renderReceipt(data){
  entries.sort((x,y)=>new Date(y.date||0)-new Date(x.date||0));
  const masthead=document.createElement("div");masthead.className="receipt-masthead";
  const brand=document.createElement("div");brand.className="receipt-brand";
- addText(brand,"div","MMW","receipt-monogram");
+ const officialMark=document.createElement("img");officialMark.src="./favicon.svg";officialMark.alt="MMW";officialMark.className="receipt-monogram";brand.appendChild(officialMark);
  const brandCopy=document.createElement("div");addText(brandCopy,"strong","MMW-COMPANY");addText(brandCopy,"small","РАЗВИТИЕ ПРОЕКТОВ ОТ ВОЗМОЖНОСТИ ДО РЕЗУЛЬТАТА");brand.appendChild(brandCopy);
  masthead.appendChild(brand);addText(masthead,"div","КЛИЕНТСКИЙ ДОКУМЕНТ","receipt-doc-type");root.appendChild(masthead);
  addText(root,"div","ВЫПИСКА ПО ЗАЯВКАМ И ОБРАЩЕНИЯМ","receipt-kicker");
